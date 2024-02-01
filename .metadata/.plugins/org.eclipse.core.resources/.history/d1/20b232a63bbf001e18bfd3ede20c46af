@@ -1,0 +1,10 @@
+package edu.java.variable05;
+
+public class CharacterMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

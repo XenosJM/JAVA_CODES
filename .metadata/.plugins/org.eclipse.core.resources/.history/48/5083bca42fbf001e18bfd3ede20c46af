@@ -1,0 +1,16 @@
+package edu.java.variable01;
+
+public class VariableMain {
+
+	// 주석 : 컴파일러가 읽지 못하는 메모
+	// 프로그램의 시작점 : main() 메소드
+	public static void main(String[] args) {
+		// println() : 데이터를 console 창에 보여주는 함수
+		System.out.println("변수(variable)");
+		
+	} // end main()
+
+} // end VariableMain
+
+
+

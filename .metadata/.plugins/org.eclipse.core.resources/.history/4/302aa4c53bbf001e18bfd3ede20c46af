@@ -1,0 +1,13 @@
+package edu.java.variable05;
+
+public class CharacterMain {
+
+	public static void main(String[] args) {
+		System.out.println("문자(char) 자료형");
+		
+		char ch1 = 'A';
+		System.out.println("ch1 = " + ch1);
+		
+	} // end main()
+
+} // end CharacterMain

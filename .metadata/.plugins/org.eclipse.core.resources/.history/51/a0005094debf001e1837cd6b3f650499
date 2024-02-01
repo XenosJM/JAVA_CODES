@@ -1,0 +1,14 @@
+package edu.java.oper01;
+
+public class OperatorMain01 {
+
+	public static void main(String[] args) {
+		System.out.println("대입 연산자(=)");
+		// 변수 = 값;
+		// - 오른쪽의 값을 왼쪽의 변수에 저장하는 연산자
+		
+		
+		
+	} // end main()
+
+} // end OperatorMain01

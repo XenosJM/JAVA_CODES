@@ -1,0 +1,19 @@
+package edu.java.if07;
+
+import java.util.Scanner;
+
+public class IfMain07 {
+
+	public static void main(String[] args) {
+		// Ctrl + Shift + f : 코드 자동 정렬
+		Scanner sc = new Scanner(System.in);
+		
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		int c = sc.nextInt();
+		
+		// 입력된 3 개의 숫자 중 가장 큰 수를 출력하시오
+
+	} // end main()
+
+} // end IfMain07

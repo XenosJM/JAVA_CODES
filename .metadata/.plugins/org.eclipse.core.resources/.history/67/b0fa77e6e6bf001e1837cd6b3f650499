@@ -1,0 +1,24 @@
+package edu.java.oper03;
+
+// 증감 연산자
+// - 변수의 값을 1 증가 또는 감소할 때 사용하는 연산자
+// - 변수의 앞(prefix)과 뒤(suffix)에 사용
+// - ++, --
+public class OperatorMain03 {
+
+	public static void main(String[] args) {
+		System.out.println("증감 연산자(++, --)");
+		
+		int num1 = 100;
+		num1++;
+		// num1 += 1;
+		// num1 = num1 + 1;
+		System.out.println("num1 = " + num1);
+		
+		
+	} // end main()
+
+} // end OperatorMain03
+
+
+

@@ -1,0 +1,11 @@
+package edu.java.for04;
+
+public class ForMain04 {
+
+	public static void main(String[] args) {
+		
+		
+		
+	} // end main()
+
+} // end ForMain04

@@ -1,0 +1,10 @@
+package edu.java.while01;
+
+public class WhileMain01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

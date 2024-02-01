@@ -1,0 +1,15 @@
+package edu.java.variable06;
+
+public class LiteralMain {
+
+	public static void main(String[] args) {
+		System.out.println("리터럴(Literal)");
+		
+		int integer1 = 1234; // 정수 리터럴은 기본적으로 int
+		long integer2 = 12345678900L; // long 타입 리터럴 뒤에 1 또는 L을 추가
+		double decimal1 = 3.1415; // 실수 리터럴은 기본적으로 double
+		float decimal = 3.14f; // float 타입 리터럴 뒤에 f 또는 F를 추가
+
+	} // end main()
+
+} // end LiteralMian

@@ -1,0 +1,10 @@
+package edu.java.variable03;
+
+public class DecimalMain {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

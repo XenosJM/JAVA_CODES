@@ -1,0 +1,14 @@
+package edu.java.oper02;
+
+public class OperatorMain02 {
+
+	public static void main(String[] args) {
+		
+		int age = 16;
+		age = age + 1; // == age = 16 + 1
+		
+		age += 1; // == age = age+ 1;
+		System.out.println(age);
+	} // end main()
+
+} // end OperatorMain02

@@ -1,0 +1,10 @@
+package edu.java.if01;
+
+public class IfMain01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

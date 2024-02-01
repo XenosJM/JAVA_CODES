@@ -1,0 +1,16 @@
+package edu.java.for03;
+
+public class ForMain03 {
+
+	public static void main(String[] args) {
+		System.out.println("for문 연습");
+		// 1 ~ 100"까지" 정수 중에서 10의 배수들"만" 출력
+		for(int x = 1; x <= 100; x++) {
+			if(x % 10 == 0) {
+				System.out.print(x + " ");
+			}
+		}
+		
+	} // end main()
+
+} // end ForMain03

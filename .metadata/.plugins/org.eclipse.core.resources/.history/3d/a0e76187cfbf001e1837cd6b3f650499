@@ -1,0 +1,15 @@
+package edu.java.variable08;
+
+public class ScannerMain01 {
+
+	public static void main(String[] args) {
+		System.out.println("변수 입력(Scanner)");
+		
+		// 입력을 받기 위한 변수는 Scanner 선언
+		Scanner sc = new Scanner(System.in);
+		
+		
+		
+	} // end main()
+
+} // end ScannerMain01

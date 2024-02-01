@@ -1,0 +1,11 @@
+package edu.java.variable07;
+
+public class TypeCastingMain {
+
+	public static void main(String[] args) {
+		System.out.println("형 변환(Type Casting)");
+		
+		
+	} // end main()
+
+} // end TypeCastingMain

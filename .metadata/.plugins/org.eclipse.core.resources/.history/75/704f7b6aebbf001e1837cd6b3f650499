@@ -1,0 +1,19 @@
+package edu.java.oper04;
+
+public class OperatorMain04 {
+
+	public static void main(String[] args) {
+		System.out.println("비교 연산자");
+		
+		System.out.println(10 > 20); // 10이 20보다 큰가?
+		System.out.println(10 < 20); // 10이 20보다 작은가?
+		System.out.println(123 == 100); // 123이 100과 같은가?
+		System.out.println(123 != 100); // 123dl 100과 다른가?
+		
+		
+	} // end main()
+
+} // end OperatorMain04
+
+
+

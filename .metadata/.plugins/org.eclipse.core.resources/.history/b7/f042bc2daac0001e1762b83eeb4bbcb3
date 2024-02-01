@@ -1,0 +1,17 @@
+package edu.java.for01;
+
+public class ForMain01 {
+
+	public static void main(String[] args) {
+		System.out.println("for 반복문");
+		
+		// 1 ~ 10까지 출력
+		for (int x = 1; x <= 10; x++) {
+			System.out.println(x);
+		}
+		
+		
+		
+	} // end main()
+
+} // end ForMain01
