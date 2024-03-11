@@ -19,7 +19,7 @@ public class OperatorMain01 {
 		System.out.println(num2);
 		num2 = 4 / 1;
 		System.out.println(num2);
-		num2 = 10 % 2;
+		num2 = 10 % 3;
 		System.out.println(num2);
 		
 		// (정수) / (정수) : 나눈 몫을 계산

@@ -31,6 +31,11 @@ public class CharacterMain {
 		System.out.println("str = " + "안녕하세용");
 		
 		
+		for (char c = 'a'; c <= 'z'; c++ ) {
+			System.out.print(c + " ");
+		}
+		
+		
 	} // end main()
 
 } // end CharacterMain

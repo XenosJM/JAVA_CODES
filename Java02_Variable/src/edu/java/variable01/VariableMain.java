@@ -1,5 +1,10 @@
 package edu.java.variable01;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
+
 public class VariableMain {
 
 	// 주석 : 컴파일러가 읽지 못하는 메모
@@ -23,9 +28,9 @@ public class VariableMain {
 		y = 10;
 		System.out.println("x = " + x);
 		System.out.println("y = " + y);
-		
-	} // end main()
 
+	} // end main()
+	
 } // end VariableMain
 
 

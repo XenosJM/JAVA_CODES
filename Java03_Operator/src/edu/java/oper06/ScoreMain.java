@@ -21,7 +21,7 @@ public class ScoreMain {
 				
 		// 3. 국어, 영어, 수학 점수를 출력
 		
-		System.out.println(("국어 점수 : " + kor) + ("영어 점수 : " + eng) + ("수학 점수 : " + math));
+		System.out.println(("국어 점수 : " + kor) + (" 영어 점수 : " + eng) + (" 수학 점수 : " + math));
 		
 		// 4. 총점을 계산하여 출력
 		int total = kor + eng + math;
