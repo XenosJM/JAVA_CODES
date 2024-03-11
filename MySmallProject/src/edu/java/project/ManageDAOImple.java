@@ -12,7 +12,7 @@ import java.util.List;
 
 import oracle.jdbc.OracleDriver;
 
-public class ManageDAOImple implements ManageDAO, OracleQuery, HistoryQuery, MemberQuery, ProductQuery, PcQuery {
+public class ManageDAOImple implements ManageDAO, OracleQuery {
 
 	// 싱글톤 디자인패턴
 	private static ManageDAOImple instance = null;
