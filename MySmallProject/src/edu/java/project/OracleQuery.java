@@ -28,14 +28,14 @@ public interface OracleQuery {
 	public static final String COL_P_NUMBER = "PRODUCT_NUMBER";
 	public static final String COL_P_NAME = "PRODUCT_NAME";
 	public static final String COL_P_INFO = "PRODUCT_INFO";
-	public static final String COL_P_PRICE = "PRODUCT_SELL_PRICE";
+	public static final String COL_P_SELL_PRICE = "PRODUCT_SELL_PRICE";
 	public static final String COL_P_QTY = "PRODUCT_QUANTITY";
 	
 	String TABLE_PC = "EX_PC";
 	String COL_PC_NUMBER = "PC_NUMBER";
 	String COL_PC_INFO = "PC_INFO";
 	String COL_PC_STATE = "PC_STATE";
-	String COL_PC_M_NUM = "MEMBER_NUMBER";
+	String COL_PC_M_ID = "MEMBER_ID";
 	
 	String TABLE_ORDER = "EX_ORDER";
 	String COL_ORDER_NUM = "ORDER_NUMBER";
@@ -46,6 +46,15 @@ public interface OracleQuery {
 	// 데이터 등록
 		public static final String SQL_H_INSERT = "INSERT INTO " + TABLE_HISTORY
 				+ " VALUES (SEQ_HISTORY.NEXTVAL, sysdate, ?, ?, ?, ?, ?, ?)";
+		public static final String SQL_H_UPDATE =  
+			    "UPDATE " + TABLE_MEMBER + " SET " + 
+			    		COL_H_NUMBER + " = COALESCE(?, " + COL_M_NUMBER + "), " +
+			    		COL_H_DATE + " = COALESCE(?, " + COL_H_DATE + "), " +
+			    		COL_MEMHIST + " = COALESCE(?, " + COL_MEMHIST + "), " +
+			    		COL_PRODHIST + " = COALESCE(?, " + COL_PRODHIST + "), " +
+			    		COL_PCHIST + " = COALESCE(?, " + COL_PCHIST + "), " +
+			    		COL_ORDERHIST + " = COALESCE(?, " + COL_ORDERHIST + ") " +
+			    "WHERE " + COL_M_NUMBER + " = ?";
 //		// 회원 변동 내역 이용 정보
 //		public static final String SQL_H_INSERT_M_HIST = "INSERT INTO " + TABLE_HISTORY +
 //				" VALUES (SEQ_HISTORY.NEXTVAL, sysdate, ?, NULL, ?, ?, NULL, ?)";
@@ -92,29 +101,28 @@ public interface OracleQuery {
 				"SELECT " + COL_H_NUMBER + ", " + COL_H_DATE + ", " + COL_PCHIST + 
 				" FROM " + TABLE_HISTORY + " ORDER BY " + COL_H_NUMBER ;
 		
-		// ===========================================================
-	
-	public static final String SQL_M_INSERT_MANAGER = "INSERT INTO " + TABLE_MEMBER
-			+ " VALUES (SEQ_MEMBER.NEXTVAL, 'admin', 'admin1234', '박정민', '010-1111-1111', wjdalstest@test.com', '0', '1')";
+		// ===========================================================		
 	// 회원 등록 - 기본적으로 시간과 관리자 여부는 0으로 고정
 	public static final String SQL_M_INSERT = "INSERT INTO " + TABLE_MEMBER
 			+ " VALUES (SEQ_MEMBER.NEXTVAL, ?, ?, ?, ?, ?, '0', '0')";
-	// 사용자 내역에 들어갈 내용은 사용시간, 충전시간, 구매기록, 시작시간, 종료시간
+	/* 사용자 내역에 들어갈 내용은 사용시간, 충전시간, 구매기록, 시작시간, 종료시간
 	public static final String SQL_M_UPDATE_HIST = 
 			"UPDATE " + TABLE_HISTORY + " SET " + 
 					COL_MEMHIST + " = ? " + // ?에는 String 값
 					"WHERE " + COL_H_NUMBER + " = ?";
-	// 관리자 회원 정보 수정
-//	public static final String SQL_M_UPDATE_MANAGER =  
-//			"UPDATE " + TABLE_MEMBER + " SET " + 
-//					COL_M_ID + " = ?, " +
-//					COL_M_PW + " = ?, " +
-//					COL_M_NAME + " = ?, " +
-//					COL_M_PHONE + " = ?, " +
-//					COL_M_EMAIL + " = ?, " +
-//					COL_M_TIME + " = ?, " +
-//					COL_M_MANAGER_ID + " = ? " +
-//					"WHERE " + COL_M_NUMBER + " = ?";
+	관리자 회원 정보 수정
+	public static final String SQL_M_UPDATE_MANAGER =  
+			"UPDATE " + TABLE_MEMBER + " SET " + 
+					COL_M_ID + " = ?, " +
+					COL_M_PW + " = ?, " +
+					COL_M_NAME + " = ?, " +
+					COL_M_PHONE + " = ?, " +
+					COL_M_EMAIL + " = ?, " +
+					COL_M_TIME + " = ?, " +
+					COL_M_MANAGER_ID + " = ? " +
+					"WHERE " + COL_M_NUMBER + " = ?";
+*/
+	
 	public static final String SQL_M_UPDATE_MANAGER =  
 		    "UPDATE " + TABLE_MEMBER + " SET " + 
 		    		COL_M_ID + " = COALESCE(?, " + COL_M_ID + "), " +
@@ -130,79 +138,83 @@ public interface OracleQuery {
 			"UPDATE " + TABLE_MEMBER + " SET " + 
 					COL_M_TIME + " = ? " +
 					"WHERE " + COL_M_NUMBER + " = ?";
-	// 시간 충전
-//	public static final String SQL_M_TIME_CHARGE =  
-//			"UPDATE " + TABLE_MEMBER + " SET " +
-//					COL_M_TIME + " = ?, " + // 기존 시간값에 +한 값을 ?에
-//					COL_H_NUMBER + " = SEQ_HISTORY.CURRVAL " + 
-//					"WHERE " + COL_M_NUMBER + " = ?";
-	// 회원 정보 변경
-//	public static final String SQL_M_UPDATE_USER = // 회원가입 당시 정보를 db에서 받아오고 SET 시킨다음 바꿀정보를 바꾸고 나머지는 다시 그대로 저장하도록. 
-//			"UPDATE " + TABLE_MEMBER + " SET " + 
-//					COL_M_ID + " = ?, " +
-//					COL_M_PW + " = ?, " +
-//					COL_M_NAME + " = ?, " +
-//					COL_M_PHONE + " = ?, " +
-//					COL_M_EMAIL + " = ? " +
-//					"WHERE " + COL_M_NUMBER + " = ?";
+/*	 시간 충전
+	public static final String SQL_M_TIME_CHARGE =  
+			"UPDATE " + TABLE_MEMBER + " SET " +
+					COL_M_TIME + " = ?, " + // 기존 시간값에 +한 값을 ?에
+					COL_H_NUMBER + " = SEQ_HISTORY.CURRVAL " + 
+					"WHERE " + COL_M_NUMBER + " = ?";
+	 회원 정보 변경
+	public static final String SQL_M_UPDATE_USER = // 회원가입 당시 정보를 db에서 받아오고 SET 시킨다음 바꿀정보를 바꾸고 나머지는 다시 그대로 저장하도록. 
+			"UPDATE " + TABLE_MEMBER + " SET " + 
+					COL_M_ID + " = ?, " +
+					COL_M_PW + " = ?, " +
+					COL_M_NAME + " = ?, " +
+					COL_M_PHONE + " = ?, " +
+					COL_M_EMAIL + " = ? " +
+
+ * 					"WHERE " + COL_M_NUMBER + " = ?";
+ */
+	
 	public static final String SQL_M_UPDATE_USER =  
 		    "UPDATE " + TABLE_MEMBER + " SET " + 
 		    		COL_M_ID + " = COALESCE(?, " + COL_M_ID + "), " +
 		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
 		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
 		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
-		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + "), " +
+		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + ") " +
 		    "WHERE " + COL_M_NUMBER + " = ?";
 	// 회원 정보 삭제 
 	public static final String SQL_M_DELETE = 
 			"DELETE " + TABLE_MEMBER + " WHERE "
 			+ COL_M_NUMBER + " = ?";
-	// 회원 전체 검색
+	// 회원 정보 전체 검색
 	public static final String SQL_M_SELECT = 
-	         "SELECT " + COL_M_NUMBER + ", " + COL_M_ID + ", " + COL_M_NAME + 
-	         " FROM " + TABLE_MEMBER + " ORDER BY " + COL_M_NUMBER;
-	// 회원 상세 검색 (번호로 검색하는거라 굳이 번호까지 나올필요가 있겠냐만은 일단은 넣어놓고 변경 가능)
-	//TODO
-	public static final String SQL_SELECT_BY_M_NUMBER = 
+	         "SELECT * FROM " + TABLE_MEMBER + " ORDER BY " + COL_M_NUMBER;
+	// 회원 정보 상세 검색 (번호로)
+	public static final String SQL_M_SELECT_BY_NUM =  
+			"SELECT " + TABLE_MEMBER + " WHERE " + COL_M_NUMBER + " = ?";
+	// 회원 상세 검색 (회원 아이디로 검색)
+	public static final String SQL_SELECT_BY_M_ID = 
 			 "SELECT " + COL_M_NUMBER + ", " + COL_M_ID + ", " + COL_M_NAME + ", " + COL_M_PHONE +
 			 ", " + COL_M_EMAIL + ", " + COL_M_TIME + " FROM " + TABLE_MEMBER +
-			 " WHERE " + COL_M_NUMBER + " = ?";
+			 " WHERE " + COL_M_ID + " = ?";
 	// ======================================================================================
 	// 데이터 등록
 		public static final String SQL_P_INSERT = "INSERT INTO " + TABLE_PRODUCT
-				+ " VALUES (SEQ_PRODUCT.NEXTVAL, ?, ?, ?, ?, ?, SEQ_HISTORY.CURRVAL)";
+				+ " VALUES (SEQ_PRODUCT.NEXTVAL, ?, ?, ?, ?)";
 		// 재고 관리
 		public static final String SQL_P_UPDATE_MANAGER = 
 				"UPDATE " + TABLE_PRODUCT + " SET " + 
-						COL_P_NAME + " = ?, " +
-						COL_P_INFO + " = ?, " +
-						COL_P_PRICE + " = ?, " +
-						COL_P_QUANTITY + " = ? " +					
+						COL_P_NAME + " = COALESCE(?, " + COL_P_NAME + "), " +
+						COL_P_INFO + " = COALESCE(?, " + COL_P_INFO + "), " +
+						COL_P_SELL_PRICE + " = COALESCE(?, " + COL_P_SELL_PRICE + "), " +
+						COL_P_QTY + " = COALESCE(?, " + COL_P_QTY + ") " +				
 						"WHERE " + COL_P_NUMBER + " = ?";
-		// 회원 상품 구매시 사용
-		public static final String SQL_P_UPDATE_USER = 
-				"UPDATE " + TABLE_PRODUCT + " SET " +
-						COL_P_QUANTITY + " = ? " +	// 0이하로는 안떨어지게할것				
-						"WHERE " + COL_P_NUMBER + " = ?";
+//		// 회원 상품 구매시 사용
+//		public static final String SQL_P_UPDATE_USER = 
+//				"UPDATE " + TABLE_PRODUCT + " SET " +
+//						COL_P_QTY + " = ? " +	// 0이하로는 안떨어지게할것				
+//						"WHERE " + COL_P_NUMBER + " = ?";
 		// 데이터 삭제 시 히스토리에 삭제 내역 넣기 무슨 상품 삭제
 		public static final String SQL_P_DELETE = 
 				"DELETE " + TABLE_PRODUCT + " WHERE " + COL_P_NUMBER + " = ?";
 		// 회원 상품정보 검색	
 		public static final String SQL_P_SELECT_USER = 
-				"SELECT "+ COL_P_NAME + ", " + COL_P_INFO + ", " + COL_P_PRICE +
+				"SELECT "+ COL_P_NAME + ", " + COL_P_INFO + ", " + COL_P_SELL_PRICE +
 				" FROM " + TABLE_PRODUCT + " ORDER BY " + COL_P_NUMBER;
 		// 데이터 전체 검색
 		public static final String SQL_P_SELECT_MANAGER = 
 				"SELECT * FROM " + TABLE_PRODUCT + " ORDER BY " + COL_P_NUMBER;
 		// 데이터 상세 검색
-		public static final String SQL_SELECT_BY_P_NUMBER = 
+		public static final String SQL_SELECT_BY_P_NAME = 
 				"SELECT * FROM " + TABLE_PRODUCT +
-				" WHERE " + COL_P_NUMBER + " = ?";
+				" WHERE " + COL_P_NAME + " = ?";
 // =====================================================================================
 		// PC 데이터 등록 
 		public static final String SQL_PC_INSERT =
 				"INSERT INTO " + TABLE_PC + 
-				" VALUES (SEQ_PC.NEXTVAL, NULL, '0', NULL)";
+				" VALUES (SEQ_PC.NEXTVAL, ?, '0', ?)";
 		// PC 데이터 검색
 		public static final String SQL_PC_SELECT = 
 				"SELECT * FROM " + TABLE_PC + " ORDER BY " + COL_PC_NUMBER;
@@ -213,19 +225,28 @@ public interface OracleQuery {
 		// PC 데이터 수정(로그인 로그아웃)
 		public static final String SQL_PC_UPDATE = 
 				"UPDATE " + TABLE_PC + " SET " + 
-						COL_PC_INFO + " = ?, " +
-						COL_PC_M_NUM + " = ? " +
-						"WHERE " + COL_PC_NUMBER + " = ?";
-		// PC 사용 변경
-		public static final String SQL_PC_USE_UPDATE = 
-				"UPDATE " + TABLE_PC + " SET " +
-						COL_PC_STATE + " = ? " +
+						COL_PC_INFO + " = COALESCE(?, " + COL_PC_INFO + "), " +
+						COL_PC_STATE + " = COALESCE(?, " + COL_PC_STATE + "), " +
+						COL_PC_M_ID + " = COALESCE(?, " + COL_PC_M_ID + "), " +
 						"WHERE " + COL_PC_NUMBER + " = ?";
 		// PC 데이터 삭제
 		public static final String SQL_PC_DELETE = 
 				"DELETE " + TABLE_PC + " WHERE " + COL_PC_NUMBER + " = ?";
 		
-		
-
+//     ================================================================ 오더 쿼리	
+	
+		// 주문내용 추가 - 수량은 -가 되지않도록 할것 
+		public static final String SQL_ORDER_ADD =
+				"INSERT INTO " + TABLE_ORDER + 
+					" VALUES(SEQ_ORDER.NEXTVAL, ?, ?, ?)";
+		// 주문 내역 전체검색 
+		public static final String SQL_ORDER_SELECT = 
+				"SELECT * FROM " + TABLE_ORDER + " ORDER BY " + COL_ORDER_NUM;
+		// 주문내역 상세검색
+		public static final String SQL_ORDER_SELECT_BY_NUMBER =
+				"SELECT * FROM " + TABLE_ORDER + " WHERE " + COL_ORDER_NUM + " = ?";
+		// 주문 취소 - 주문했던 번호를 그대로 다시 이용할 수 있도록 
+		public static final String SQL_ORDER_CANCEL =
+				"DELETE " + TABLE_ORDER + " WHERE " + COL_ORDER_NUM + " = ?";
 		
 }// END OracleQuery

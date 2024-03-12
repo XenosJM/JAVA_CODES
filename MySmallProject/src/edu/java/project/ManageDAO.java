@@ -19,32 +19,56 @@ public interface ManageDAO {
 //	- 회원 추가 ( 가입, 등록) insert
 	public abstract int insertMem(MemberVO mv);
 //	- 재고 구매 ( 구매한 날짜, 가격, 갯수, 회사) insert
-	public abstract int insertProd(ProductVO pv);	
+	public abstract int insertProd(ProductVO pv);
+//	- PC 등록
+	public abstract int insertPc(PcVO pc);
+//	- 주문 추가
+	public abstract int insertOrder(OrderVO ov);
 //	- 기록 검색 select
+	public abstract List<HistoryVO> selectHist();
+//	- 회원 내역 검색 - 기본을 관리자, 다른 메소드를 정의해서 사용자용으로 만들것
+	public abstract List<MemberVO> selectMem();	
+//	- 상품 검색
+	public abstract List<ProductVO> selectProd();
+//	- PC 검색
+	public abstract List<PcVO> selectPc();
+//	- 주문 검색 - 현재 활성화된 주문의 내역들만 볼수있게
+	public abstract List<OrderVO> selectOrder();
+//	- 기록 상세 검색 select
 	public abstract HistoryVO selectHist(int histNumber);
 //	- 회원 정보 상세 검색 select
 	public abstract MemberVO selectMem(int memberNumber);
 //	- 상품 정보 상세 검색 select
 	public abstract ProductVO selectProd(int prodNumber);
+//	- PC 정보 상세 검색 select
+	public abstract PcVO selectPc(int pcNumber);
+//	- 주문 내역 상세 검색 select
+	public abstract OrderVO selectOrder(int orderNumber);
 //	- 기록 수정 update
 	public abstract int updateHist(int histNumber, HistoryVO hv);
 //	- 회원 정보 수정 update - 관리자용
 	public abstract int updateMem(int memberNumber, MemberVO mv);
+//	- 회원 정보 수정 update - 유저용
+	public abstract int updateMemUser(int memberNumber, MemberVO mv); 
 //	- 상품 정보 수정 update	
 	public abstract int updateProd(int prodNumber, ProductVO pv);
-//	- 기록 상세 검색 select
-	public abstract List<HistoryVO> selectHist();
-//	- 회원 내역 검색 - 관리자용
-	public abstract List<MemberVO> selectMem();	
-//	- 상품 검색
-	public abstract List<ProductVO> selectProd();
+//	- 상품 판매 update
+//	public abstract int updateProdUser(int prodNumber, ProductVO pv);
+//	- PC 정보 수정 update
+	public abstract int updatePc(int pcNumber, PcVO pc);
+//	- 주문내역 변경은 없음	
 //  - 기록 정보 삭제 delete
 	public abstract int deleteHist(int histNumber);
 //	- 회원 정보 삭제 delete 	
 	public abstract int deleteMem(int memberNumber);
 //	- 상품 정보 삭제 delete
 	public abstract int deleteProd(int prodNumber);
-	
+//	- PC 정보 삭제 delete
+	public abstract int deletePc(int pcNumber);
+//	- 주문 내역 삭제(주문취소)
+	public abstract int deleteOrder(int orderNumber);
+//  - 로그인
+//	public abstract int loginMember(int )
 
 	
 //	- 구매 가격판매 가격 제외한 내용 업데이트

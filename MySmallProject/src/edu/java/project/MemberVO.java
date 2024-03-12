@@ -28,6 +28,7 @@ public class MemberVO {
 		this.memberManager = memberManager;
 	}
 
+
 	public int getMemberNumber() {
 		return memberNumber;
 	}

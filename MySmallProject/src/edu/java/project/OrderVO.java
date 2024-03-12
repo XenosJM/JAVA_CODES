@@ -1,9 +1,9 @@
 package edu.java.project;
 
 public class OrderVO {
-	private int orderNum;
-	private int orderMemNum;
-	private int orderProdNum;
+	private int orderNumber;
+	private String orderMemId;
+	private String orderProdName;
 	private int orderProdQty;
 	
 	public OrderVO() {
@@ -11,36 +11,36 @@ public class OrderVO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderVO(int orderNum, int orderMemNum, int orderProdNum, int orderProdQty) {
+	public OrderVO(int orderNumber, String orderMemId, String orderProdName, int orderProdQty) {
 		super();
-		this.orderNum = orderNum;
-		this.orderMemNum = orderMemNum;
-		this.orderProdNum = orderProdNum;
+		this.orderNumber = orderNumber;
+		this.orderMemId = orderMemId;
+		this.orderProdName = orderProdName;
 		this.orderProdQty = orderProdQty;
 	}
 
-	public int getOrderNum() {
-		return orderNum;
+	public int getOrderNumber() {
+		return orderNumber;
 	}
 
-	public void setOrderNum(int orderNum) {
-		this.orderNum = orderNum;
+	public void setOrderNumber(int orderNumber) {
+		this.orderNumber = orderNumber;
 	}
 
-	public int getOrderMemNum() {
-		return orderMemNum;
+	public String getOrderMemId() {
+		return orderMemId;
 	}
 
-	public void setOrderMemNum(int orderMemNum) {
-		this.orderMemNum = orderMemNum;
+	public void setOrderMemId(String orderMemId) {
+		this.orderMemId = orderMemId;
 	}
 
-	public int getOrderProdNum() {
-		return orderProdNum;
+	public String getOrderProdName() {
+		return orderProdName;
 	}
 
-	public void setOrderProdNum(int orderProdNum) {
-		this.orderProdNum = orderProdNum;
+	public void setOrderProdName(String orderProdName) {
+		this.orderProdName = orderProdName;
 	}
 
 	public int getOrderProdQty() {
@@ -53,7 +53,7 @@ public class OrderVO {
 
 	@Override
 	public String toString() {
-		return "OrderVO [orderNum=" + orderNum + ", orderMemNum=" + orderMemNum + ", orderProdNum=" + orderProdNum
+		return "OrderVO [orderNumber=" + orderNumber + ", orderMemId=" + orderMemId + ", orderProdName=" + orderProdName
 				+ ", orderProdQty=" + orderProdQty + "]";
 	}
 	

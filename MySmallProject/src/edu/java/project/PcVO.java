@@ -4,19 +4,19 @@ public class PcVO {
 	private int pcNumber;
 	private String pcInfo;
 	private int pcState;
-	private int pcMemNum;
+	private String pcMemId;
 			
 	public PcVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PcVO(int pcNumber, String pcInfo, int pcState, int pcMemNum) {
+	public PcVO(int pcNumber, String pcInfo, int pcState, String pcMemId) {
 		super();
 		this.pcNumber = pcNumber;
 		this.pcInfo = pcInfo;
 		this.pcState = pcState;
-		this.pcMemNum = pcMemNum;
+		this.pcMemId = pcMemId;
 	}
 
 	public int getPcNumber() {
@@ -43,18 +43,18 @@ public class PcVO {
 		this.pcState = pcState;
 	}
 
-	public int getPcMemberNumber() {
-		return pcMemNum;
+	public String getPcMemberId() {
+		return pcMemId;
 	}
 
-	public void setPcMemberNumber(int pcMemNum) {
-		this.pcMemNum = pcMemNum;
+	public void setPcMemberId(String pcMemId) {
+		this.pcMemId = pcMemId;
 	}
 
 	@Override
 	public String toString() {
-		return "PcVO [pcNumber=" + pcNumber + ", pcInfo=" + pcInfo + ", pcState=" + pcState + ", pcMemNum="
-				+ pcMemNum + "]";
+		return "PcVO [pcNumber=" + pcNumber + ", pcInfo=" + pcInfo + ", pcState=" + pcState + ", pcMemId="
+				+ pcMemId + "]";
 	}
 	
 	
