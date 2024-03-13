@@ -430,7 +430,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	}
 
 	@Override
-	public MemberVO selectMem(int memberNumber) {
+	public MemberVO selectMem(String memberId) {
 		MemberVO mv = new MemberVO();
 
 		Connection conn = null;
@@ -444,14 +444,14 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			System.out.println("DB 연결 성공");
 
-			pstmt = conn.prepareStatement(SQL_M_SELECT_BY_NUM);
-			pstmt.setInt(1, memberNumber);
+			pstmt = conn.prepareStatement(SQL_SELECT_BY_M_ID);
+			pstmt.setString(1, memberId);
 
 			rs = pstmt.executeQuery();
-
+			System.out.println("쿼리 성공");
 			if (rs.next()) { // 레코드가 존재할 때까지
-				memberNumber = rs.getInt(1);
-				String memberId = rs.getString(2);
+				int memberNumber = rs.getInt(1);
+				memberId = rs.getString(2);
 				String memberPw = rs.getString(3);
 				String memberName = rs.getString(4);
 				String memberPhone = rs.getString(5);
@@ -459,8 +459,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				int memberTime = rs.getInt(7);
 				int memberManager = rs.getInt(8);
 
-				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime,
-						memberManager);
+				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime, memberManager);
 				System.out.println(mv);
 			}
 		} catch (SQLException e) {
@@ -474,6 +473,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("선택검색 완료");
 		return mv;
 	}
 
@@ -647,7 +647,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	}
 
 	@Override
-	public int updateMem(int memberNumber, MemberVO mv) {
+	public int updateMem(String memberId, MemberVO mv) {
 		System.out.println("회원정보 수정 시작");
 		int result = 0;
 		Connection conn = null;
@@ -660,14 +660,14 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_M_UPDATE_MANAGER);
 
-			pstmt.setString(1, mv.getMemberId());
+			pstmt.setInt(1, mv.getMemberNumber());
 			pstmt.setString(2, mv.getMemberPw());
 			pstmt.setString(3, mv.getMemberName());
 			pstmt.setString(4, mv.getMemberPhone());
 			pstmt.setString(5, mv.getMemberEmail());
 			pstmt.setInt(6, mv.getMemberTime());
 			pstmt.setInt(7, mv.getMemberManager());
-			pstmt.setInt(8, memberNumber);
+			pstmt.setString(8, memberId);
 			result = pstmt.executeUpdate();
 
 			System.out.println(result + "행이 수정됐습니다.");

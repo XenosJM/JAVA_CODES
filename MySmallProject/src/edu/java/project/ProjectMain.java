@@ -9,28 +9,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-
-import oracle.jdbc.driver.T2CConnection;
-
 import javax.swing.JPasswordField;
 
 public class ProjectMain {
 
-	private JFrame frame;
+	protected JFrame frame;
 	private static ManageDAO dao;
-	private JTextField textInputId;
-	private JPasswordField InputPassword;
+	protected JTextField textInputId;
+	protected JPasswordField inputPassword;
+	private Timer timer;
+	private boolean isStop;
+	private int time;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		dao = ManageDAOImple.getInstance();
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,13 +42,13 @@ public class ProjectMain {
 		}); // end Thread
 	} // end main()
 
-	
 	/**
 	 * Create the application.
 	 */
 	public ProjectMain() {
 		initialize();
 	}
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -60,56 +59,61 @@ public class ProjectMain {
 		int screenWidth = screenSize.width;
 		int screenHeight = screenSize.height;
 		int x = (screenWidth - 600) / 2;
-        int y = (screenHeight - 400) / 2;
-        frame.setBounds(100, 100, 600, 400);
-        frame.setLocation(x, y);
+		int y = (screenHeight - 400) / 2;
+		frame.setBounds(100, 100, 600, 400);
+		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setAlwaysOnTop(true);
+
+		JPanel loginPanel = new JPanel();
+		loginPanel.setBounds(0, 0, 584, 361);
+		frame.getContentPane().add(loginPanel);
+		loginPanel.setOpaque(false);
+		loginPanel.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		panel.setBounds(0, 0, 584, 361);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
-		
+
 		JLabel lblLogin = new JLabel("로그인 해주세요.");
 		lblLogin.setFont(new Font("궁서체", Font.PLAIN, 28));
-		lblLogin.setBounds(100, 10, 400, 100);
-		panel.add(lblLogin);
-		
+		lblLogin.setBounds(12, -1, 235, 100);
+		loginPanel.add(lblLogin);
+
 		JButton btnSignUp = new JButton("회원가입");
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SignUpFrame signUp = new SignUpFrame();
 				signUp.setVisible(true);
-				
+
 			}
 		});
-		btnSignUp.setBounds(475, 203, 97, 52);
-		panel.add(btnSignUp);
-		
-		JButton btnLogIn = new JButton("로그인");
-		btnLogIn.addActionListener(new ActionListener() {
+		btnSignUp.setBounds(475, 106, 97, 52);
+		loginPanel.add(btnSignUp);
+
+		JButton btnLogin = new JButton("사용 시작");
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				MemberLogin login = new MemberLogin();
-				login.setVisible(true);
+				memberLogin();
+				startTimer();
+//				changePanel();
 				
-			}
+			} // end action
 		});
-		btnLogIn.setBounds(475, 265, 97, 86);
-		panel.add(btnLogIn);
-		
+		btnLogin.setBounds(475, 10, 97, 86);
+		loginPanel.add(btnLogin);
+
 		textInputId = new JTextField();
-		textInputId.setBounds(309, 265, 154, 38);
-		panel.add(textInputId);
+		textInputId.setBounds(309, 10, 154, 38);
+		loginPanel.add(textInputId);
 		textInputId.setColumns(10);
+
+		inputPassword = new JPasswordField();
+		inputPassword.setBounds(309, 56, 154, 40);
+		loginPanel.add(inputPassword);
 		
-		InputPassword = new JPasswordField();
-		InputPassword.setBounds(309, 311, 154, 40);
-		panel.add(InputPassword);
 		
-		// 
+		
+/*
 //		String[] pairs = hv.getHistMem().split(", "); // 쉼표와 공백을 기준으로 나눔
 //
 //		for (String pair : pairs) {
@@ -118,9 +122,76 @@ public class ProjectMain {
 //			String Value = Column[1].trim();
 //			System.out.println("컬럼 : " + Name + " 값 : " + Value);
 //		}
-		
+ */
+
 	} // end initialize()
+
+	protected void selectMem() {
+		String inputId = textInputId.getText();
+		MemberVO mv = new MemberVO(); 
+		// TODO 리스트를 사용해야함
+		MemberVO list = dao.selectMem(inputId);
+		mv = dao.selectMem(inputId);
+		int memberNumber = mv.getMemberNumber();
+		String memberId = mv.getMemberId();
+		String memberPw = mv.getMemberPw();
+		
+		
+	}
 	
+	
+	
+	protected void memberLogin() {
+		String id = textInputId.getText();
+		char[] pwChar = inputPassword.getPassword();
+		String pw = String.valueOf(pwChar);
+		MemberVO mv = dao.selectMem(id);
+		int managerId = mv.getMemberManager();
 		
-		
+		if (id.equals(mv.getMemberId())) {
+			if (pw.equals(mv.getMemberPw())) {
+				System.out.println("로그인 성공");
+				if (managerId == 1) {
+					ManagerLogin mgLogin = new ManagerLogin();
+					mgLogin.setVisible(true);
+					frame.setVisible(false);
+				} else {
+					MemberLogin login = new MemberLogin();
+					login.setVisible(true);
+					frame.setVisible(false);
+				} // end managerId 체크
+
+			} else {
+				System.out.println("비밀번호가 틀렸습니다.");
+			} // end Pw 체크
+
+		} else {
+			System.out.println("아이디가 틀렸습니다.");
+		} // end id 체크
+
+	}
+	
+	protected void startTimer() {
+		String id = textInputId.getText();
+		MemberVO mv = dao.selectMem(id);
+		time = mv.getMemberTime();
+		isStop = false;
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				if(isStop) {
+					timer.cancel();
+				}
+				if (time > 0) {
+					time--;           
+				} else {
+					timer.cancel();
+				}
+			}
+		};
+		timer = new Timer();
+		timer.schedule(timerTask, 1, 1000);
+	}
+	
+
 } // end ProjectMain

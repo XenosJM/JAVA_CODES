@@ -173,12 +173,10 @@ public interface OracleQuery {
 	         "SELECT * FROM " + TABLE_MEMBER + " ORDER BY " + COL_M_NUMBER;
 	// 회원 정보 상세 검색 (번호로)
 	public static final String SQL_M_SELECT_BY_NUM =  
-			"SELECT " + TABLE_MEMBER + " WHERE " + COL_M_NUMBER + " = ?";
+			"SELECT * FROM " + TABLE_MEMBER + " WHERE " + COL_M_NUMBER + " = ?";
 	// 회원 상세 검색 (회원 아이디로 검색)
 	public static final String SQL_SELECT_BY_M_ID = 
-			 "SELECT " + COL_M_NUMBER + ", " + COL_M_ID + ", " + COL_M_NAME + ", " + COL_M_PHONE +
-			 ", " + COL_M_EMAIL + ", " + COL_M_TIME + " FROM " + TABLE_MEMBER +
-			 " WHERE " + COL_M_ID + " = ?";
+			 "SELECT * FROM " + TABLE_MEMBER + " WHERE " + COL_M_ID + " = ?";
 	// ======================================================================================
 	// 데이터 등록
 		public static final String SQL_P_INSERT = "INSERT INTO " + TABLE_PRODUCT

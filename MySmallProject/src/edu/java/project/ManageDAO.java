@@ -37,7 +37,7 @@ public interface ManageDAO {
 //	- 기록 상세 검색 select
 	public abstract HistoryVO selectHist(int histNumber);
 //	- 회원 정보 상세 검색 select
-	public abstract MemberVO selectMem(int memberNumber);
+	public abstract MemberVO selectMem(String memberId);
 //	- 상품 정보 상세 검색 select
 	public abstract ProductVO selectProd(int prodNumber);
 //	- PC 정보 상세 검색 select
@@ -47,7 +47,7 @@ public interface ManageDAO {
 //	- 기록 수정 update
 	public abstract int updateHist(int histNumber, HistoryVO hv);
 //	- 회원 정보 수정 update - 관리자용
-	public abstract int updateMem(int memberNumber, MemberVO mv);
+	public abstract int updateMem(String memberId, MemberVO mv);
 //	- 회원 정보 수정 update - 유저용
 	public abstract int updateMemUser(int memberNumber, MemberVO mv); 
 //	- 상품 정보 수정 update	

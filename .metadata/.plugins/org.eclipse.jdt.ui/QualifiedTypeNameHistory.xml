@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
-    <fullyQualifiedTypeName name="java.lang.Math"/>
-    <fullyQualifiedTypeName name="java.lang.String"/>
-    <fullyQualifiedTypeName name="edu.java.gui09.GuiMain09"/>
-    <fullyQualifiedTypeName name="javax.swing.JFileChooser"/>
-    <fullyQualifiedTypeName name="java.io.File"/>
-    <fullyQualifiedTypeName name="javax.swing.text.AbstractDocument.Content"/>
-    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-    <fullyQualifiedTypeName name="edu.java.gui11.MyDialog"/>
-    <fullyQualifiedTypeName name="edu.java.gui12.MyFrame"/>
     <fullyQualifiedTypeName name="edu.java.contact05.ContactMain05"/>
-    <fullyQualifiedTypeName name="javax.swing.JTable"/>
-    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
     <fullyQualifiedTypeName name="edu.java.contact05.ContactVO"/>
     <fullyQualifiedTypeName name="edu.java.contact05.ContactDAOImple"/>
     <fullyQualifiedTypeName name="java.awt.event.FocusEvent"/>
@@ -57,7 +45,19 @@
     <fullyQualifiedTypeName name="oracle.jdbc.driver.T2CConnection"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="edu.java.project.ManagerLogin"/>
+    <fullyQualifiedTypeName name="edu.java.project.SignUpFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+    <fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
+    <fullyQualifiedTypeName name="edu.java.project.ProductManage"/>
+    <fullyQualifiedTypeName name="javax.swing.JTable"/>
+    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+    <fullyQualifiedTypeName name="java.awt.Frame"/>
+    <fullyQualifiedTypeName name="com.sun.tools.javac.Main"/>
     <fullyQualifiedTypeName name="edu.java.project.ProjectMain"/>
     <fullyQualifiedTypeName name="edu.java.project.MemberVO"/>
-    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="java.nio.channels.IllegalBlockingModeException"/>
+    <fullyQualifiedTypeName name="java.util.Calendar"/>
+    <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 </qualifiedTypeNameHistroy>

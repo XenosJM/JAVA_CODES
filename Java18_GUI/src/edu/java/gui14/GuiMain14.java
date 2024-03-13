@@ -116,7 +116,7 @@ public class GuiMain14 {
          }
       };
       timer = new Timer();
-      timer.schedule(timerTask, 1, 10);
+      timer.schedule(timerTask, 1, 1000);
    }
    
    private void currentDate() {
