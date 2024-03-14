@@ -49,7 +49,7 @@ public interface ManageDAO {
 //	- 회원 정보 수정 update - 관리자용
 	public abstract int updateMem(String memberId, MemberVO mv);
 //	- 회원 정보 수정 update - 유저용
-	public abstract int updateMemUser(int memberNumber, MemberVO mv); 
+	public abstract int updateMemUser(String memberId, MemberVO mv); 
 //	- 상품 정보 수정 update	
 	public abstract int updateProd(int prodNumber, ProductVO pv);
 //	- 상품 판매 update

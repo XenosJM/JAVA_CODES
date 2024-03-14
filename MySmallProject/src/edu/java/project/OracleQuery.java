@@ -144,26 +144,26 @@ public interface OracleQuery {
 					COL_M_TIME + " = ?, " + // 기존 시간값에 +한 값을 ?에
 					COL_H_NUMBER + " = SEQ_HISTORY.CURRVAL " + 
 					"WHERE " + COL_M_NUMBER + " = ?";
-	 회원 정보 변경
+*/
+//	 회원 정보 변경
 	public static final String SQL_M_UPDATE_USER = // 회원가입 당시 정보를 db에서 받아오고 SET 시킨다음 바꿀정보를 바꾸고 나머지는 다시 그대로 저장하도록. 
 			"UPDATE " + TABLE_MEMBER + " SET " + 
-					COL_M_ID + " = ?, " +
 					COL_M_PW + " = ?, " +
 					COL_M_NAME + " = ?, " +
 					COL_M_PHONE + " = ?, " +
 					COL_M_EMAIL + " = ? " +
-
- * 					"WHERE " + COL_M_NUMBER + " = ?";
- */
+  					"WHERE " + COL_M_ID + " = ?";
+ 
 	
-	public static final String SQL_M_UPDATE_USER =  
-		    "UPDATE " + TABLE_MEMBER + " SET " + 
-		    		COL_M_ID + " = COALESCE(?, " + COL_M_ID + "), " +
-		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
-		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
-		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
-		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + ") " +
-		    "WHERE " + COL_M_NUMBER + " = ?";
+	
+//	public static final String SQL_M_UPDATE_USER =  
+//		    "UPDATE " + TABLE_MEMBER + " SET " + 
+//		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
+//		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
+//		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
+//		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + ") " + 
+////		    		COL_M_TIME + " = COALESCE(?, " + COL_M_TIME + ") " + 
+//		    "WHERE " + COL_M_ID + " = ?";
 	// 회원 정보 삭제 
 	public static final String SQL_M_DELETE = 
 			"DELETE " + TABLE_MEMBER + " WHERE "

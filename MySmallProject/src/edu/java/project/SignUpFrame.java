@@ -24,7 +24,7 @@ public class SignUpFrame extends JFrame {
 	private JTextField textMemberEmail;
 	private JPasswordField inputPassword;
 	private static ManageDAO dao;
-
+	private ProjectMain pm;
 	/**
 	 * Create the frame.
 	 * 
@@ -124,7 +124,7 @@ public class SignUpFrame extends JFrame {
 
 			}
 		});
-		boxMemberTime.setVisible(true);
+		boxMemberTime.setVisible(false);
 		contentPane.add(boxMemberTime);
 
 		JLabel lblMemberManagerId = new JLabel("관리자 설정");

@@ -22,9 +22,9 @@ public class ProjectMain {
 	private static ManageDAO dao;
 	protected JTextField textInputId;
 	protected JPasswordField inputPassword;
-	private Timer timer;
-	private boolean isStop;
-	private int time;
+
+	MemberVO mv = new MemberVO();
+
 	/**
 	 * Launch the application.
 	 */
@@ -49,7 +49,6 @@ public class ProjectMain {
 		initialize();
 	}
 
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -71,7 +70,6 @@ public class ProjectMain {
 		frame.getContentPane().add(loginPanel);
 		loginPanel.setOpaque(false);
 		loginPanel.setLayout(null);
-		
 
 		JLabel lblLogin = new JLabel("로그인 해주세요.");
 		lblLogin.setFont(new Font("궁서체", Font.PLAIN, 28));
@@ -92,11 +90,9 @@ public class ProjectMain {
 		JButton btnLogin = new JButton("사용 시작");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				memberLogin();
-				startTimer();
 //				changePanel();
-				
+
 			} // end action
 		});
 		btnLogin.setBounds(475, 10, 97, 86);
@@ -110,55 +106,36 @@ public class ProjectMain {
 		inputPassword = new JPasswordField();
 		inputPassword.setBounds(309, 56, 154, 40);
 		loginPanel.add(inputPassword);
-		
-		
-		
-/*
-//		String[] pairs = hv.getHistMem().split(", "); // 쉼표와 공백을 기준으로 나눔
-//
-//		for (String pair : pairs) {
-//			String[] Column = pair.split(": "); // 콜론과 공백을 기준으로 나눔
-//			String Name = Column[0].trim();
-//			String Value = Column[1].trim();
-//			System.out.println("컬럼 : " + Name + " 값 : " + Value);
-//		}
- */
 
 	} // end initialize()
 
-	protected void selectMem() {
-		String inputId = textInputId.getText();
-		MemberVO mv = new MemberVO(); 
-		// TODO 리스트를 사용해야함
-		MemberVO list = dao.selectMem(inputId);
-		mv = dao.selectMem(inputId);
-		int memberNumber = mv.getMemberNumber();
-		String memberId = mv.getMemberId();
-		String memberPw = mv.getMemberPw();
-		
-		
+	protected void memberInfo() {
+		// TODO select
 	}
-	
-	
-	
+
 	protected void memberLogin() {
 		String id = textInputId.getText();
 		char[] pwChar = inputPassword.getPassword();
 		String pw = String.valueOf(pwChar);
-		MemberVO mv = dao.selectMem(id);
+		mv = dao.selectMem(id);
 		int managerId = mv.getMemberManager();
-		
+
 		if (id.equals(mv.getMemberId())) {
 			if (pw.equals(mv.getMemberPw())) {
 				System.out.println("로그인 성공");
 				if (managerId == 1) {
-					ManagerLogin mgLogin = new ManagerLogin();
+					ManagerLogin mgLogin = new ManagerLogin(); // 매니저일시 열릴 창
 					mgLogin.setVisible(true);
 					frame.setVisible(false);
 				} else {
-					MemberLogin login = new MemberLogin();
+					//TODO 시간이 0일때 접속 못하게 바꿀것.
+					MemberLogin login = new MemberLogin(); // 사용자일시 열릴 창
+					login.setInfoFromPM(id, mv.getMemberNumber());
+					login.setLblMember();
+					login.currentTime();
 					login.setVisible(true);
 					frame.setVisible(false);
+					login.startTime();
 				} // end managerId 체크
 
 			} else {
@@ -170,28 +147,7 @@ public class ProjectMain {
 		} // end id 체크
 
 	}
-	
-	protected void startTimer() {
-		String id = textInputId.getText();
-		MemberVO mv = dao.selectMem(id);
-		time = mv.getMemberTime();
-		isStop = false;
-		TimerTask timerTask = new TimerTask() {
-			@Override
-			public void run() {
-				if(isStop) {
-					timer.cancel();
-				}
-				if (time > 0) {
-					time--;           
-				} else {
-					timer.cancel();
-				}
-			}
-		};
-		timer = new Timer();
-		timer.schedule(timerTask, 1, 1000);
-	}
-	
+
+	// TODO 알림판 메인에서 처리
 
 } // end ProjectMain

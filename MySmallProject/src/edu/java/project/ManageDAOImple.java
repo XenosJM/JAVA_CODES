@@ -13,7 +13,6 @@ import oracle.jdbc.OracleDriver;
 public class ManageDAOImple implements ManageDAO, OracleQuery {
 	// 싱글톤 디자인패턴
 	private static ManageDAOImple instance = null;
-
 	// private 생성자 = 함수를 사용하고 싶을때 생성자에서 부름
 	private ManageDAOImple() {
 		// TODO 생성자에 들어가야할 함수가 생기면 넣을것
@@ -688,7 +687,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	}
 
 	@Override
-	public int updateMemUser(int memberNumber, MemberVO mv) {
+	public int updateMemUser(String memberId, MemberVO mv) {
 		System.out.println("사용자 정보 수정 시작");
 		int result = 0;
 		Connection conn = null;
@@ -701,12 +700,13 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_M_UPDATE_USER);
 
-			pstmt.setString(1, mv.getMemberId());
-			pstmt.setString(2, mv.getMemberPw());
-			pstmt.setString(3, mv.getMemberName());
-			pstmt.setString(4, mv.getMemberPhone());
-			pstmt.setString(5, mv.getMemberEmail());
-			pstmt.setInt(6, memberNumber);
+//			pstmt.setInt(1, mv.getMemberNumber());
+			pstmt.setString(1, mv.getMemberPw());
+			pstmt.setString(2, mv.getMemberName());
+			pstmt.setString(3, mv.getMemberPhone());
+			pstmt.setString(4, mv.getMemberEmail());
+//			pstmt.setInt(5, mv.getMemberTime());
+			pstmt.setString(5, memberId);
 			result = pstmt.executeUpdate();
 
 			System.out.println(result + "행이 수정됐습니다.");
