@@ -23,7 +23,8 @@ public class MemberLogin extends JFrame {
 	private int lastTime;
 	private JButton btnUserQuit;
 	private ProjectMain pm;
-	private CheckPw cp = new CheckPw();
+	private CheckPw cp;
+	private UserUpdate uu;
 
 	public MemberLogin() {
 		dao = ManageDAOImple.getInstance();
@@ -48,7 +49,7 @@ public class MemberLogin extends JFrame {
 		btnUserUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO 창 열어서 비밀번호 입력 후 맞으면 업데이트 창이 열리고 진행후 저장
-//				uu = new UserUpdate();
+				cp = new CheckPw();
 				cp.setVisible(true);			
 				
 			}
@@ -105,24 +106,7 @@ public class MemberLogin extends JFrame {
 		this.numFromPM = memNum;
 	}
 
-//	protected void startTimer() {
-//		boolean isStop = false;
-//		TimerTask timerTask = new TimerTask() {
-//			@Override
-//			public void run() {
-//				if (isStop) {
-//					timer.cancel();
-//				}
-//				if (time > 0) {
-//					time--;
-//				} else {
-//					timer.cancel();
-//				}
-//			}
-//		};
-//		timer = new Timer();
-//		timer.schedule(timerTask, 1, 1000);
-//	}
+
 
 	protected void currentTime() {
 		System.out.println("시간표시");
@@ -177,23 +161,24 @@ public class MemberLogin extends JFrame {
 		}
 		pm.frame.setVisible(true);
 	}
-// TODO 요기 수정할것
-//	protected void updateMemUser() {
-//		String id = lblMemberId.getText();
-//		System.out.println(id);
-//		char[] pwChar = uu.inputPassword.getPassword();
-//		String pw = String.valueOf(pwChar);
-//		System.out.println(pw);
-//		String name = uu.textMemberName.getText();
-//		System.out.println(name);
-//		String phone = uu.textMemberPhone.getText();
-//		System.out.println(phone);
-//		String email = uu.textMemberEmail.getText();
-//		System.out.println(email);
-//		MemberVO mv = new MemberVO(0, id, pw, name, phone, email, lastTime, 0);
-//		dao.updateMemUser(id, mv);
-//		System.out.println("수정 완료");
-//	}
+// TODO 다시 체크할것 널포인트값을 해결했지만 뭔가 우회하는 느낌이니 체크
+	protected void updateMemUser() {
+		String id = lblMemberId.getText();
+		System.out.println(id);
+		uu = new UserUpdate();
+		char[] pwChar = uu.inputPassword.getPassword();
+		String pw = String.valueOf(pwChar);
+		System.out.println(pw);
+		String name = uu.textMemberName.getText();
+		System.out.println(name);
+		String phone = uu.textMemberPhone.getText();
+		System.out.println(phone);
+		String email = uu.textMemberEmail.getText();
+		System.out.println(email);
+		MemberVO mv = new MemberVO(0, id, pw, name, phone, email, lastTime, 0);
+		dao.updateMemUser(id, mv);
+		System.out.println("수정 완료");
+	}
 
 	public int startTime() {
 		// TODO Auto-generated method stub

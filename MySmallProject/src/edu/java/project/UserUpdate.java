@@ -17,7 +17,7 @@ public class UserUpdate extends JFrame {
 	JFrame frame;
 	private JPanel contentPane;
 	protected JTextField textMemberName, textMemberPhone, textMemberEmail;
-	protected JLabel lblMemberId, lblMemberPw, lblMemberName, lblMemberPhone, lblMemberEmail;
+	protected JLabel lblMemberId, lblMemberPw, lblMemberName, lblMemberPhone, lblMemberEmail, lblMemberNum;
 	protected JPasswordField inputPassword;
 	protected JButton btnMemberUpdate;
 	private static ManageDAO dao;
@@ -44,7 +44,9 @@ public class UserUpdate extends JFrame {
 		btnMemberUpdate = new JButton("회원 정보 수정");	
 		btnMemberUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateMemUser();
+				login = new MemberLogin();
+				login.setInfoFromPM(lblMemberId.getText(), Integer.parseInt(lblMemberNum.getText()));
+				login.updateMemUser();
 				dispose();
 			}
 		});
@@ -89,9 +91,12 @@ public class UserUpdate extends JFrame {
 		inputPassword = new JPasswordField();
 		inputPassword.setBounds(211, 65, 187, 44);
 		contentPane.add(inputPassword);
+		
+		lblMemberNum = new JLabel("회원 번호");
+		lblMemberNum.setBounds(211, 10, 187, 44);
+		contentPane.add(lblMemberNum);
 
 		// GuiMain11의 btn1과 비교해보면 더 쉽게 이해 가능
 	}
-
-	}
 }
+

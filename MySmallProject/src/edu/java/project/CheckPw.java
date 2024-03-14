@@ -81,11 +81,14 @@ public class CheckPw extends JFrame {
 		String pw = String.valueOf(pwChar);
 //		System.out.println("mv : " + id);
 		MemberVO mv = dao.selectMem(id);
+		int num = mv.getMemberNumber();
 		// TODO
 		if (id.equals(mv.getMemberId())) {
 			if (pw.equals(mv.getMemberPw())) {
 				System.out.println("로그인 성공");
 				uu = new UserUpdate();
+				uu.lblMemberId.setText(id);
+				uu.lblMemberNum.setText(String.valueOf(num));
 				uu.setVisible(true);
 				dispose();
 			} else {
