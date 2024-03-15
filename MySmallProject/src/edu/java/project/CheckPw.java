@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,8 @@ public class CheckPw extends JFrame {
 	private MemberLogin login;
 	private JTextField textInputId;
 	private UserUpdate uu;
+	private JFrame frame;
+	private JOptionPane pane;
 	protected JButton okButton, cancelButton;
 	
 	public CheckPw() {
@@ -35,16 +38,16 @@ public class CheckPw extends JFrame {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 
-		lblNotice = new JLabel("본인확인을 위해 비밀번호를 입력해주세요");
-		lblNotice.setBounds(109, 24, 228, 40);
+		lblNotice = new JLabel("본인확인을 위해 다시 한번 로그인해주세요");
+		lblNotice.setBounds(97, 24, 240, 40);
 		getContentPane().add(lblNotice);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(109, 127, 228, 40);
+		passwordField.setBounds(97, 127, 240, 40);
 		getContentPane().add(passwordField);
 		textInputId = new JTextField();
 
-		textInputId.setBounds(109, 74, 228, 40);
+		textInputId.setBounds(97, 74, 240, 40);
 		getContentPane().add(textInputId);
 		textInputId.setColumns(10);
 
@@ -87,15 +90,15 @@ public class CheckPw extends JFrame {
 			if (pw.equals(mv.getMemberPw())) {
 				System.out.println("로그인 성공");
 				uu = new UserUpdate();
-				uu.lblMemberId.setText(id);
+				uu.lblMemberId.setText(mv.getMemberId());
 				uu.lblMemberNum.setText(String.valueOf(num));
 				uu.setVisible(true);
 				dispose();
 			} else {
-				System.out.println("비밀번호가 틀렸습니다.");
+				pane.showMessageDialog(frame, "비밀번호가 틀렸습니다.");
 			} // end Pw 체크
 		} else {
-			System.out.println("아이디가 틀렸습니다.");
+			pane.showMessageDialog(frame, "아이디가 틀렸습니다.");
 		} // end id 체크
 
 	}

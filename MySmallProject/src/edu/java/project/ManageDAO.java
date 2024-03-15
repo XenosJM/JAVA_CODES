@@ -1,6 +1,6 @@
 package edu.java.project;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface ManageDAO {
 	
@@ -25,19 +25,21 @@ public interface ManageDAO {
 //	- 주문 추가
 	public abstract int insertOrder(OrderVO ov);
 //	- 기록 검색 select
-	public abstract List<HistoryVO> selectHist();
+	public abstract ArrayList<HistoryVO> selectHist();
 //	- 회원 내역 검색 - 기본을 관리자, 다른 메소드를 정의해서 사용자용으로 만들것
-	public abstract List<MemberVO> selectMem();	
+	public abstract ArrayList<MemberVO> selectMem();	
 //	- 상품 검색
-	public abstract List<ProductVO> selectProd();
+	public abstract ArrayList<ProductVO> selectProd();
 //	- PC 검색
-	public abstract List<PcVO> selectPc();
+	public abstract ArrayList<PcVO> selectPc();
 //	- 주문 검색 - 현재 활성화된 주문의 내역들만 볼수있게
-	public abstract List<OrderVO> selectOrder();
+	public abstract ArrayList<OrderVO> selectOrder();
 //	- 기록 상세 검색 select
 	public abstract HistoryVO selectHist(int histNumber);
 //	- 회원 정보 상세 검색 select
 	public abstract MemberVO selectMem(String memberId);
+//	- 회원 정보 아무거나 검색
+	public abstract MemberVO selectMemAni(int memberNumber, String memberId, String memberName);
 //	- 상품 정보 상세 검색 select
 	public abstract ProductVO selectProd(int prodNumber);
 //	- PC 정보 상세 검색 select
@@ -49,11 +51,12 @@ public interface ManageDAO {
 //	- 회원 정보 수정 update - 관리자용
 	public abstract int updateMem(String memberId, MemberVO mv);
 //	- 회원 정보 수정 update - 유저용
-	public abstract int updateMemUser(String memberId, MemberVO mv); 
+	public abstract int updateMemUser(String memberId, MemberVO mv);
+//	- 회원 시간 정보 변동 TODO 시간 변동 사항 저장할 쿼리를 이용하기위한 임플 작성및 기능 멤버 로그인에 만들기
+	public abstract int updateTime(String memberId, int memberTime);
 //	- 상품 정보 수정 update	
 	public abstract int updateProd(int prodNumber, ProductVO pv);
-//	- 상품 판매 update
-//	public abstract int updateProdUser(int prodNumber, ProductVO pv);
+
 //	- PC 정보 수정 update
 	public abstract int updatePc(int pcNumber, PcVO pc);
 //	- 주문내역 변경은 없음	

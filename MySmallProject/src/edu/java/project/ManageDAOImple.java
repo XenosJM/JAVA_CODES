@@ -173,7 +173,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	} // end 주문추가
 
 	@Override
-	public List<HistoryVO> selectHist() {
+	public ArrayList<HistoryVO> selectHist() {
 		System.out.println("DB 히스토리 검색 시작");
 		ArrayList<HistoryVO> list = new ArrayList<>();
 		Connection conn = null;
@@ -216,7 +216,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	} // end 히스토리 전체검색
 
 	@Override
-	public List<MemberVO> selectMem() {
+	public ArrayList<MemberVO> selectMem() {
 		System.out.println("DB 회원정보 검색 시작");
 		ArrayList<MemberVO> list = new ArrayList<>();
 		Connection conn = null;
@@ -229,20 +229,30 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_M_SELECT);
+			System.out.println("쿼리 실행 준비");
 			rs = pstmt.executeQuery();
+			System.out.println("쿼리 실행");
 
 			while (rs.next()) { // 레코드가 존재할 때까지
 				int memberNumber = rs.getInt(1); // member number
+				System.out.println(memberNumber);
 				String memberId = rs.getString(2); // member id
+				System.out.println(memberId);
 				String memberPw = rs.getString(3); // member pw
+				System.out.println(memberPw);
 				String memberName = rs.getString(4); // member name
+				System.out.println(memberName);
 				String memberPhone = rs.getString(5); // member phone
+				System.out.println(memberPhone);
 				String memberEmail = rs.getString(6); // member email
+				System.out.println(memberEmail);
 				int memberTime = rs.getInt(7); // member Time
+				System.out.println(memberTime);
 				int memberManager = rs.getInt(8); // ManagerId
+				System.out.println(memberManager);
 				MemberVO mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail,
 						memberTime, memberManager);
-				list.add(mv); // TODO 나중에 이 리스트의 값에서 각 테이블의 히스토리값을 불러와서 나누는 작업을 메인해서 할것.
+				list.add(mv); 
 			}
 			System.out.println("DB 작업완료");
 		} catch (SQLException e) {
@@ -252,6 +262,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			try {
 				pstmt.close();
 				conn.close();
+				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -261,7 +272,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	} // end 멤버 전체검색
 
 	@Override
-	public List<ProductVO> selectProd() {
+	public ArrayList<ProductVO> selectProd() {
 		System.out.println("DB 상품정보 검색 시작");
 		ArrayList<ProductVO> list = new ArrayList<>();
 		Connection conn = null;
@@ -301,7 +312,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	}
 
 	@Override
-	public List<PcVO> selectPc() {
+	public ArrayList<PcVO> selectPc() {
 		System.out.println("DB pc내역 검색 시작");
 		ArrayList<PcVO> list = new ArrayList<>();
 		Connection conn = null;
@@ -341,7 +352,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	}
 
 	@Override
-	public List<OrderVO> selectOrder() {
+	public ArrayList<OrderVO> selectOrder() {
 		System.out.println("DB 히스토리 검색 시작");
 		ArrayList<OrderVO> list = new ArrayList<>();
 		Connection conn = null;
@@ -476,6 +487,57 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return mv;
 	}
 
+	
+	public MemberVO selectMemAni(int memberNumber, String memberId, String memberName) {
+		System.out.println("아무거나 쿼리 시작");
+		MemberVO mv = new MemberVO();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null; // select query 결과 저장할 클래스
+
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			System.out.println("드라이버 로드 성공");
+
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("DB 연결 성공");
+
+			pstmt = conn.prepareStatement(SQL_SELECT_M_ANY);
+			pstmt.setInt(1, memberNumber);
+			pstmt.setString(2, memberId);
+			pstmt.setString(3, memberName);
+
+			rs = pstmt.executeQuery();
+			System.out.println("아무거나 쿼리 성공");
+			if (rs.next()) { // 레코드가 존재할 때까지
+				memberNumber = rs.getInt(1);
+				memberId = rs.getString(2);
+				String memberPw = rs.getString(3);
+				memberName = rs.getString(4);
+				String memberPhone = rs.getString(5);
+				String memberEmail = rs.getString(6);
+				int memberTime = rs.getInt(7);
+				int memberManager = rs.getInt(8);
+
+				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime, memberManager);
+				System.out.println(mv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("아무거나 검색 완료");
+		return mv;
+	}
+	
 	@Override
 	public ProductVO selectProd(int prodNumber) {
 		ProductVO pv = new ProductVO();
@@ -727,6 +789,42 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 	}
 
 	@Override
+	public int updateTime(String memberId, int memberTime) {
+		System.out.println("회원 시간 변동 수정");
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			System.out.println("드라이버 로드 성공");
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("DB 연결 성공");
+			pstmt = conn.prepareStatement(SQL_M_UPDATE_TIME_CHANGE);
+
+
+			pstmt.setInt(1, memberTime);
+			pstmt.setString(2, memberId);
+			result = pstmt.executeUpdate();
+
+			System.out.println(result + "행이 수정됐습니다.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("시간 저장 완료");
+		return result;
+	}
+	
+	@Override
 	public int updateProd(int prodNumber, ProductVO pv) {
 		System.out.println("상품정보 업데이트 시작");
 		int result = 0;
@@ -763,7 +861,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("DB작업 완료");
 		return result;
 	}
-
+	
 	@Override
 	public int updatePc(int pcNumber, PcVO pc) {
 		System.out.println("PC내역 업데이트 시작");
@@ -800,7 +898,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("DB작업 완료");
 		return result;
 	}
-
+	
 	@Override
 	public int deleteHist(int histNumber) {
 		System.out.println("히스토리 내역 삭제 시작");
@@ -996,6 +1094,8 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
+
+
 //	- 상품 판매
 
 //	- 회원 정보 창
@@ -1004,7 +1104,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 
 //	- 로그인 기능( 관리자면 로그인 성공 아닐시 실패)
 
-//	- 회원 남은 시간 추가 기능(상품결제와는 다르게 추가로)
 
 //	- PC사용 현황 체크
 

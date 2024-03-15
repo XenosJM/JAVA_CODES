@@ -100,6 +100,9 @@ public interface OracleQuery {
 		public static final String SQL_SELECT_PC_HISTORY = 
 				"SELECT " + COL_H_NUMBER + ", " + COL_H_DATE + ", " + COL_PCHIST + 
 				" FROM " + TABLE_HISTORY + " ORDER BY " + COL_H_NUMBER ;
+		// 아무거나로도 검색되게 
+		public static final String SQL_SELECT_M_ANY = "SELECT * FROM " + TABLE_MEMBER + " WHERE " +
+		COL_M_NUMBER + " = ? OR " + COL_M_ID + " = ? OR " + COL_M_NAME + "= ?";
 		
 		// ===========================================================		
 	// 회원 등록 - 기본적으로 시간과 관리자 여부는 0으로 고정
@@ -132,38 +135,38 @@ public interface OracleQuery {
 		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + "), " +
 		    		COL_M_TIME + " = COALESCE(?, " + COL_M_TIME + "), " +
 		    		COL_M_MANAGER_ID + " = COALESCE(?, " + COL_M_MANAGER_ID + ") " +
-		    "WHERE " + COL_M_NUMBER + " = ?";
-	// 회원 남은시간 변화시 사용 충전, 사용종료, 등 시간종료시에는 SYS데이트 에 사용시간을 뺀 값을 저장
+		    "WHERE " + COL_M_ID + " = ?";
+	
+	// 회원 남은시간 변화시. 충전, 사용종료
 	public static final String SQL_M_UPDATE_TIME_CHANGE =  
-			"UPDATE " + TABLE_MEMBER + " SET " + 
-					COL_M_TIME + " = ? " +
-					"WHERE " + COL_M_NUMBER + " = ?";
-/*	 시간 충전
+		    "UPDATE " + TABLE_MEMBER + " SET " + 
+		        COL_M_TIME + " = ? " +
+		        "WHERE " + COL_M_ID + " = ?";
+//	 시간 충전
 	public static final String SQL_M_TIME_CHARGE =  
 			"UPDATE " + TABLE_MEMBER + " SET " +
-					COL_M_TIME + " = ?, " + // 기존 시간값에 +한 값을 ?에
-					COL_H_NUMBER + " = SEQ_HISTORY.CURRVAL " + 
+					COL_M_TIME + " = ? " + COL_M_TIME + // 기존 시간값에 +한 값을 ?에
 					"WHERE " + COL_M_NUMBER + " = ?";
-*/
+
 //	 회원 정보 변경
-	public static final String SQL_M_UPDATE_USER = // 회원가입 당시 정보를 db에서 받아오고 SET 시킨다음 바꿀정보를 바꾸고 나머지는 다시 그대로 저장하도록. 
-			"UPDATE " + TABLE_MEMBER + " SET " + 
-					COL_M_PW + " = ?, " +
-					COL_M_NAME + " = ?, " +
-					COL_M_PHONE + " = ?, " +
-					COL_M_EMAIL + " = ? " +
-  					"WHERE " + COL_M_ID + " = ?";
+//	public static final String SQL_M_UPDATE_USER = // 회원가입 당시 정보를 db에서 받아오고 SET 시킨다음 바꿀정보를 바꾸고 나머지는 다시 그대로 저장하도록. 
+//			"UPDATE " + TABLE_MEMBER + " SET " + 
+//					COL_M_PW + " = ?, " +
+//					COL_M_NAME + " = ?, " +
+//					COL_M_PHONE + " = ?, " +
+//					COL_M_EMAIL + " = ? " +
+//  					"WHERE " + COL_M_ID + " = ?";
  
 	
 	
-//	public static final String SQL_M_UPDATE_USER =  
-//		    "UPDATE " + TABLE_MEMBER + " SET " + 
-//		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
-//		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
-//		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
-//		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + ") " + 
-////		    		COL_M_TIME + " = COALESCE(?, " + COL_M_TIME + ") " + 
-//		    "WHERE " + COL_M_ID + " = ?";
+	public static final String SQL_M_UPDATE_USER =  
+		    "UPDATE " + TABLE_MEMBER + " SET " + 
+		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
+		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
+		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
+		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + ") " + 
+//		    		COL_M_TIME + " = COALESCE(?, " + COL_M_TIME + ") " + 
+		    "WHERE " + COL_M_ID + " = ?";
 	// 회원 정보 삭제 
 	public static final String SQL_M_DELETE = 
 			"DELETE " + TABLE_MEMBER + " WHERE "

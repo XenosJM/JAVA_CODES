@@ -95,12 +95,19 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return "MemberVO [memberNumber=" + memberNumber + ", memberId=" + memberId + ", memberPw=" + memberPw
-				+ ", memberName=" + memberName + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail
-				+ ", memberTime=" + memberTime + ", memberManager=" + memberManager + "]";
+		int time = memberTime;
+		int hour = time / 3600;
+		int minute = (time % 3600) / 60;
+		int seconds = time % 60;
+		return "MemberVO [회원 번호 = " + memberNumber + ", 아이디 = " + memberId + ", 비밀번호 = " + maskPassword(memberPw)
+				+ ", 이름 = " + memberName + ", 전화번호 = " + memberPhone + ", 이메일 = " + memberEmail
+				+ ", 남은 시간 =" + hour + "시간 " + minute + "분 " + seconds +"초, 관리자 여부 =" + memberManager + "]";
 	}
-
-
+	
+	private String maskPassword(String memberPw) {
+	    // 비밀번호를 마스킹 처리하는 로직을 구현
+	    return "********";
+	}
 	
 	
 	

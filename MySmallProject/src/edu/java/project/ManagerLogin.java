@@ -7,68 +7,111 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuBar;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import javax.swing.JTextArea;
 
 public class ManagerLogin extends JFrame {
-
-	private JPanel contentPane;
-
+	private JPanel contentPane, PCManagePanel, ProdManagePanel;
+	private JTextPane textPaneNotice;
+	private Component currentComponent;
+	private ManageDAO dao;
 
 	public ManagerLogin() {
+		dao = ManageDAOImple.getInstance();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 878, 705);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JButton btnPCManage = new JButton("PC관리");
+		btnPCManage.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				// 현재 판넬 제거
+				getContentPane().remove(currentComponent);
+				revalidate(); // 컴퍼넌트 재검토
+				repaint(); // 컴퍼넌트 다시 그림
+				textPaneNotice.setVisible(false);
+				// 로그인 했을 때 보여줄 판넬 추가
+				PCManagePanel PC = new PCManagePanel();
+
+				// 로그인 판넬을 프레임에 연결
+				getContentPane().add(PC, BorderLayout.CENTER);
+				revalidate();
+				repaint();
+
+				currentComponent = PC;
+
+			}
+		});
+		menuBar.add(btnPCManage);
+
+		JButton btnSelectMember = new JButton("전체 회원 조회");
+		menuBar.add(btnSelectMember);
+		btnSelectMember.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 현재 판넬 제거
+				getContentPane().remove(currentComponent);
+				revalidate(); // 컴퍼넌트 재검토
+				repaint(); // 컴퍼넌트 다시 그림
+				// 로그인 했을 때 보여줄 판넬 추가
+				ManageAllSelectMember mas= new ManageAllSelectMember();
+				// 로그인 판넬을 프레임에 연결
+				getContentPane().add(mas, BorderLayout.CENTER);
+				revalidate();
+				repaint();
+				textPaneNotice.setVisible(false);
+				
+
+				currentComponent = mas;
+			}
+			
+		});
+
+		JButton btnTimeCharge = new JButton("회원 시간 충전");
+		btnTimeCharge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 현재 판넬 제거
+				getContentPane().remove(currentComponent);
+				revalidate(); // 컴퍼넌트 재검토
+				repaint(); // 컴퍼넌트 다시 그림
+
+				// 로그인 했을 때 보여줄 판넬 추가
+				ManageTimeCharge mtc = new ManageTimeCharge();
+
+				// 로그인 판넬을 프레임에 연결
+				getContentPane().add(mtc, BorderLayout.CENTER);
+				revalidate();
+				repaint();
+
+				currentComponent = mtc;
+
+			}
+		});
+		menuBar.add(btnTimeCharge);
+
 		JButton btnProdManage = new JButton("재고관리");
+		menuBar.add(btnProdManage);
 		btnProdManage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				// TODO
 				ProductManage prodMg = new ProductManage();
 				prodMg.setVisible(true);
 			}
 		});
-		btnProdManage.setBounds(12, 10, 137, 38);
-		contentPane.add(btnProdManage);
-		
-		JButton btnSelectMember = new JButton("전체 회원 조회");
-		btnSelectMember.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
-		});
-		btnSelectMember.setBounds(12, 154, 137, 38);
-		contentPane.add(btnSelectMember);
-		
-		JButton btnSelectMemBy = new JButton("회원검색");
-		btnSelectMemBy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
-		});
-		btnSelectMemBy.setBounds(12, 202, 137, 38);
-		contentPane.add(btnSelectMemBy);
-		
-		JButton btnUpdateMember = new JButton("회원 정보 변경");
-		btnUpdateMember.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
-		});
-		btnUpdateMember.setBounds(12, 106, 137, 38);
-		contentPane.add(btnUpdateMember);
-		
-		JButton btnInsertMem = new JButton("회원 추가");
-		btnInsertMem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//TODO
-			}
-		});
-		btnInsertMem.setBounds(12, 58, 137, 38);
-		contentPane.add(btnInsertMem);
-		
+
 		JButton btnManagerLogout = new JButton("로그아웃");
+		menuBar.add(btnManagerLogout);
 		btnManagerLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -76,31 +119,19 @@ public class ManagerLogin extends JFrame {
 				projectMain.frame.setVisible(true);
 			}
 		});
-		btnManagerLogout.setBounds(12, 250, 137, 38);
-		contentPane.add(btnManagerLogout);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		currentComponent = contentPane;
+
+		textPaneNotice = new JTextPane();
+		textPaneNotice.setFont(new Font("굴림", Font.PLAIN, 45));
+		textPaneNotice.setFocusable(false);
+		textPaneNotice.setText("관리할 목록을 골라 주세요.");
+		textPaneNotice.setBounds(147, 268, 570, 72);
+		contentPane.add(textPaneNotice);
 		
-		JButton btnNewButton_6 = new JButton("New button");
-		btnNewButton_6.setBounds(12, 298, 137, 38);
-		contentPane.add(btnNewButton_6);
-		
-		JButton btnNewButton_7 = new JButton("New button");
-		btnNewButton_7.setBounds(12, 346, 137, 38);
-		contentPane.add(btnNewButton_7);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(284, 15, 129, 129);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(566, 15, 129, 129);
-		contentPane.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(425, 15, 129, 129);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		lblNewLabel_3.setBounds(707, 10, 129, 129);
-		contentPane.add(lblNewLabel_3);
+
 	}
 }
