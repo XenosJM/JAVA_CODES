@@ -99,6 +99,14 @@ public class ManagerLogin extends JFrame {
 			}
 		});
 		menuBar.add(btnTimeCharge);
+		
+		JButton btnCheckOrder = new JButton("주문확인");
+		btnCheckOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
+		menuBar.add(btnCheckOrder);
 
 		JButton btnProdManage = new JButton("재고관리");
 		menuBar.add(btnProdManage);

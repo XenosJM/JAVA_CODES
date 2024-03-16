@@ -30,6 +30,8 @@ public interface ManageDAO {
 	public abstract ArrayList<MemberVO> selectMem();	
 //	- 상품 검색
 	public abstract ArrayList<ProductVO> selectProd();
+//	- 상품 종류별 검색 select
+	public abstract ArrayList<ProductVO> selectProdKind(String prodKind);
 //	- PC 검색
 	public abstract ArrayList<PcVO> selectPc();
 //	- 주문 검색 - 현재 활성화된 주문의 내역들만 볼수있게
@@ -41,7 +43,7 @@ public interface ManageDAO {
 //	- 회원 정보 아무거나 검색
 	public abstract MemberVO selectMemAni(int memberNumber, String memberId, String memberName);
 //	- 상품 정보 상세 검색 select
-	public abstract ProductVO selectProd(int prodNumber);
+	public abstract ProductVO selectProd(String prodName);
 //	- PC 정보 상세 검색 select
 	public abstract PcVO selectPc(int pcNumber);
 //	- 주문 내역 상세 검색 select
@@ -56,10 +58,10 @@ public interface ManageDAO {
 	public abstract int updateTime(String memberId, int memberTime);
 //	- 상품 정보 수정 update	
 	public abstract int updateProd(int prodNumber, ProductVO pv);
-
+//  - 상품 판매 수정 update
+	public abstract int updateProdUser(int prodNumber, ProductVO pv);
 //	- PC 정보 수정 update
 	public abstract int updatePc(int pcNumber, PcVO pc);
-//	- 주문내역 변경은 없음	
 //  - 기록 정보 삭제 delete
 	public abstract int deleteHist(int histNumber);
 //	- 회원 정보 삭제 delete 	
@@ -69,7 +71,9 @@ public interface ManageDAO {
 //	- PC 정보 삭제 delete
 	public abstract int deletePc(int pcNumber);
 //	- 주문 내역 삭제(주문취소)
-	public abstract int deleteOrder(int orderNumber);
+	public abstract OrderVO selectOrderChk(String orderMemId);
+//	- 주문 취소
+	public abstract int orderCancel(int orderNumber);
 //  - 로그인
 //	public abstract int loginMember(int )
 

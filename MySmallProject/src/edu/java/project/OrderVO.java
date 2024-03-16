@@ -5,18 +5,20 @@ public class OrderVO {
 	private String orderMemId;
 	private String orderProdName;
 	private int orderProdQty;
+	private String orderProdKind;
 	
 	public OrderVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderVO(int orderNumber, String orderMemId, String orderProdName, int orderProdQty) {
+	public OrderVO(int orderNumber, String orderMemId, String orderProdName, int orderProdQty, String orderProdKind) {
 		super();
 		this.orderNumber = orderNumber;
 		this.orderMemId = orderMemId;
 		this.orderProdName = orderProdName;
 		this.orderProdQty = orderProdQty;
+		this.orderProdKind = orderProdKind;
 	}
 
 	public int getOrderNumber() {
@@ -51,11 +53,21 @@ public class OrderVO {
 		this.orderProdQty = orderProdQty;
 	}
 
+	public String getOrderProdKind() {
+		return orderProdKind;
+	}
+
+	public void setOrderProdKind(String orderProdKind) {
+		this.orderProdKind = orderProdKind;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderVO [orderNumber=" + orderNumber + ", orderMemId=" + orderMemId + ", orderProdName=" + orderProdName
-				+ ", orderProdQty=" + orderProdQty + "]";
+				+ ", orderProdQty=" + orderProdQty + ", orderProdKind=" + orderProdKind + "]";
 	}
+
+	
 	
 	
 	

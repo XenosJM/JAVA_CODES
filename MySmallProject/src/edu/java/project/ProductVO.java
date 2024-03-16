@@ -3,6 +3,7 @@ package edu.java.project;
 public class ProductVO {
 	private int prodNumber;
 	private String prodName;
+	private String prodKind;
 	private String prodInfo;
 	private int prodSellPrice;
 	private int prodQty;
@@ -12,11 +13,12 @@ public class ProductVO {
 		// TODO Auto-generated constructor stub
 	} // end 기본생성자
 
-	public ProductVO(int prodNumber, String prodName, String prodInfo, int prodSellPrice,
+	public ProductVO(int prodNumber, String prodName, String prodKind, String prodInfo, int prodSellPrice,
 			int prodQty) {
 		super();
 		this.prodNumber = prodNumber;
 		this.prodName = prodName;
+		this.prodKind = prodKind;
 		this.prodInfo = prodInfo;
 		this.prodSellPrice = prodSellPrice;
 		this.prodQty = prodQty;
@@ -38,6 +40,14 @@ public class ProductVO {
 		this.prodName = prodName;
 	}
 
+	public String getProdKind() {
+		return prodKind;
+	}
+
+	public void setProdKind(String prodKind) {
+		this.prodKind = prodKind;
+	}
+
 	public String getProdInfo() {
 		return prodInfo;
 	}
@@ -54,21 +64,20 @@ public class ProductVO {
 		this.prodSellPrice = prodSellPrice;
 	}
 
-	public int getProdQuantity() {
+	public int getProdQty() {
 		return prodQty;
 	}
 
-	public void setProdQuantity(int prodQty) {
+	public void setProdQty(int prodQty) {
 		this.prodQty = prodQty;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductVO [prodNumber=" + prodNumber + ", prodName=" + prodName + ", prodInfo=" + prodInfo
-				+ ", prodPrice=" + prodSellPrice + ", prodQty=" + prodQty + "]";
+		return "ProductVO [prodNumber=" + prodNumber + ", prodName=" + prodName + ", prodKind=" + prodKind
+				+ ", prodInfo=" + prodInfo + ", prodSellPrice=" + prodSellPrice + ", prodQty=" + prodQty + "]";
 	}
 
-
-
+	
 	
 } // end ProductVO

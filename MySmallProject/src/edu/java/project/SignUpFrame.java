@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,10 @@ public class SignUpFrame extends JFrame {
 	private JTextField textMemberPhone;
 	private JTextField textMemberEmail;
 	private JPasswordField inputPassword;
+	private JOptionPane pane;
 	private static ManageDAO dao;
+	private MemberVO mv;
+
 	/**
 	 * Create the frame.
 	 * 
@@ -66,7 +70,7 @@ public class SignUpFrame extends JFrame {
 		contentPane.add(textMemberEmail);
 
 		JLabel lblMemberId = new JLabel("회원 아이디");
-		lblMemberId.setBounds(12, 10, 187, 44);
+		lblMemberId.setBounds(12, 10, 99, 44);
 		contentPane.add(lblMemberId);
 
 		JLabel lblMemberPw = new JLabel("회원 비밀번호");
@@ -82,26 +86,61 @@ public class SignUpFrame extends JFrame {
 		contentPane.add(lblMemberPhone);
 
 		JLabel lblMemberEmail = new JLabel("회원 이메일");
-		lblMemberEmail.setBounds(12, 226, 187, 44);
+		lblMemberEmail.setBounds(12, 226, 99, 44);
 		contentPane.add(lblMemberEmail);
 
 		inputPassword = new JPasswordField();
 		inputPassword.setBounds(211, 65, 187, 44);
 		contentPane.add(inputPassword);
 
+		JButton btnCheckId = new JButton("중복확인");
+		btnCheckId.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getMemInfo();
+				MemberVO chkId = dao.selectMem(mv.getMemberId());
+				if(mv.getMemberId().equals(chkId.getMemberId())) {
+					pane.showMessageDialog(contentPane, "이미 사용중인 아이디 입니다.");
+				}
+			}
+		});
+		btnCheckId.setBounds(123, 11, 81, 44);
+		contentPane.add(btnCheckId);
+
+		JButton btnCheckEmail = new JButton("중복확인");
+		btnCheckEmail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getMemInfo();
+				MemberVO chkEm = dao.selectMem(mv.getMemberEmail());
+				if(mv.getMemberEmail().equals(chkEm.getMemberEmail())) {
+					pane.showMessageDialog(contentPane, "이미 사용중인 이메일 입니다.");
+				}
+				
+			}
+		});
+		btnCheckEmail.setBounds(123, 226, 81, 44);
+		contentPane.add(btnCheckEmail);
+
 		// GuiMain11의 btn1과 비교해보면 더 쉽게 이해 가능
 	}
 
-	public void insertMem() {
+	public void getMemInfo() {
 		String Id = textInputId.getText();
 		char[] PwChar = inputPassword.getPassword();
 		String Pw = String.valueOf(PwChar);
 		String name = textMemberName.getText();
 		String phone = textMemberPhone.getText();
 		String email = textMemberEmail.getText();
+		mv = new MemberVO(0, Id, Pw, name, phone, email, 0, 0);
+	}
 
-		MemberVO mv = new MemberVO(0, Id, Pw, name, phone, email, 0, 0);
-		dao.insertMem(mv);
+	public void insertMem() {
+		try {
+			dao.insertMem(mv);
+		} catch (Exception e) {
+			pane.showMessageDialog(contentPane, "아이디 또는 이메일이 중복됩니다.");
+			e.printStackTrace();
+		}
+//		dao.insertMem(mv);
 
 	}
 

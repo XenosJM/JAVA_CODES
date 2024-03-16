@@ -14,6 +14,9 @@ import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -29,7 +32,7 @@ public class ProjectMain {
 	MemberVO mv = new MemberVO();
 	private JPasswordField inputPassword;
 	private JTextField textInputId;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -65,6 +68,7 @@ public class ProjectMain {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
+		frame.setAlwaysOnTop(true);
 
 		JPanel loginPanel = new JPanel();
 		loginPanel.setBounds(0, 0, 584, 361);
@@ -97,6 +101,7 @@ public class ProjectMain {
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				System.exit(0);
 			}
 		});
 		btnExit.setBounds(475, 153, 97, 40);
@@ -155,7 +160,6 @@ public class ProjectMain {
 		} // end id 체크
 
 	}
-	protected void memberInfo() {
-		// TODO select
-	}
+
+
 } // end ProjectMain

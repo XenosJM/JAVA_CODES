@@ -27,6 +27,7 @@ public interface OracleQuery {
 	public static final String TABLE_PRODUCT = "EX_PRODUCT";
 	public static final String COL_P_NUMBER = "PRODUCT_NUMBER";
 	public static final String COL_P_NAME = "PRODUCT_NAME";
+	String COL_P_KIND = "PRODUCT_KIND";
 	public static final String COL_P_INFO = "PRODUCT_INFO";
 	public static final String COL_P_SELL_PRICE = "PRODUCT_SELL_PRICE";
 	public static final String COL_P_QTY = "PRODUCT_QUANTITY";
@@ -41,7 +42,8 @@ public interface OracleQuery {
 	String COL_ORDER_NUM = "ORDER_NUMBER";
 	String COL_ORDER_M_ID = "MEMBER_ID";
 	String COL_ORDER_P_NAME = "PRODUCT_NAME";
-	String COL_ORDER_P_QTY = "PRODUCT_QTY";
+	String COL_ORDER_P_QTY = "PRODUCT_QUANTITY";
+	String COL_ORDER_P_KIND = "PRODUCT_KIND";
 	//=================================================== 히스토리 쿼리
 	// 데이터 등록
 		public static final String SQL_H_INSERT = "INSERT INTO " + TABLE_HISTORY
@@ -190,13 +192,14 @@ public interface OracleQuery {
 						COL_P_NAME + " = COALESCE(?, " + COL_P_NAME + "), " +
 						COL_P_INFO + " = COALESCE(?, " + COL_P_INFO + "), " +
 						COL_P_SELL_PRICE + " = COALESCE(?, " + COL_P_SELL_PRICE + "), " +
-						COL_P_QTY + " = COALESCE(?, " + COL_P_QTY + ") " +				
+						COL_P_QTY + " = COALESCE(?, " + COL_P_QTY + "), " + 
+						COL_P_KIND + " = COALESCE(?, " + COL_P_KIND + ") " + 
 						"WHERE " + COL_P_NUMBER + " = ?";
-//		// 회원 상품 구매시 사용
-//		public static final String SQL_P_UPDATE_USER = 
-//				"UPDATE " + TABLE_PRODUCT + " SET " +
-//						COL_P_QTY + " = ? " +	// 0이하로는 안떨어지게할것				
-//						"WHERE " + COL_P_NUMBER + " = ?";
+		// 회원 상품 구매시 사용
+		public static final String SQL_P_UPDATE_USER = 
+				"UPDATE " + TABLE_PRODUCT + " SET " +
+						COL_P_QTY + " = ? " +	// 0이하로는 안떨어지게할것				
+						"WHERE " + COL_P_NUMBER + " = ?";
 		// 데이터 삭제 시 히스토리에 삭제 내역 넣기 무슨 상품 삭제
 		public static final String SQL_P_DELETE = 
 				"DELETE " + TABLE_PRODUCT + " WHERE " + COL_P_NUMBER + " = ?";
@@ -211,6 +214,10 @@ public interface OracleQuery {
 		public static final String SQL_SELECT_BY_P_NAME = 
 				"SELECT * FROM " + TABLE_PRODUCT +
 				" WHERE " + COL_P_NAME + " = ?";
+		// 데이터 상세 검색
+		public static final String SQL_SELECT_BY_P_KIND = 
+				"SELECT * FROM " + TABLE_PRODUCT +
+				" WHERE " + COL_P_KIND + " = ?";
 // =====================================================================================
 		// PC 데이터 등록 
 		public static final String SQL_PC_INSERT =
@@ -239,15 +246,21 @@ public interface OracleQuery {
 		// 주문내용 추가 - 수량은 -가 되지않도록 할것 
 		public static final String SQL_ORDER_ADD =
 				"INSERT INTO " + TABLE_ORDER + 
-					" VALUES(SEQ_ORDER.NEXTVAL, ?, ?, ?)";
+					" VALUES(SEQ_ORDER.NEXTVAL, ?, ?, ?, ?)";
 		// 주문 내역 전체검색 
 		public static final String SQL_ORDER_SELECT = 
 				"SELECT * FROM " + TABLE_ORDER + " ORDER BY " + COL_ORDER_NUM;
 		// 주문내역 상세검색
 		public static final String SQL_ORDER_SELECT_BY_NUMBER =
 				"SELECT * FROM " + TABLE_ORDER + " WHERE " + COL_ORDER_NUM + " = ?";
-		// 주문 취소 - 주문했던 번호를 그대로 다시 이용할 수 있도록 
+		// 회원 마지막 주문 확인
+		public static final String SQL_M_ORDER_CHECK = 
+				"SELECT " + COL_ORDER_NUM + " FROM ( SELECT " + COL_ORDER_NUM + " FROM " + TABLE_ORDER +
+				" WHERE " + COL_ORDER_M_ID + " = ? ORDER BY " +	COL_ORDER_NUM + " DESC"
+				+ ") WHERE ROWNUM = 1";
+		// 주문 취소 - 
 		public static final String SQL_ORDER_CANCEL =
 				"DELETE " + TABLE_ORDER + " WHERE " + COL_ORDER_NUM + " = ?";
+
 		
 }// END OracleQuery

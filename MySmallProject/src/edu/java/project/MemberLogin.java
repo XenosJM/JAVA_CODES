@@ -21,7 +21,7 @@ public class MemberLogin extends JFrame {
 	private JFrame frame;
 	protected String idFromPM;
 	protected int numFromPM;
-	private int startTime, endTime, lastTime;
+	private int startTime, endTime, lastTime, orderNumber;
 	private JButton btnUserQuit;
 	private ProjectMain pm;
 	private CheckPw cp;
@@ -39,7 +39,11 @@ public class MemberLogin extends JFrame {
 		JButton btnUserOrderProd = new JButton("상품 주문");
 		btnUserOrderProd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prodOrder();
+				OrderProduct op = new OrderProduct();
+				op.lblOrderMember.setText(idFromPM);
+				System.out.println(idFromPM);
+				op.setVisible(true);
+				
 			}
 		});
 		btnUserOrderProd.setBounds(12, 10, 131, 47);
@@ -73,26 +77,34 @@ public class MemberLogin extends JFrame {
 		lblMemberTime.setBounds(155, 67, 274, 47);
 		contentPane.add(lblMemberTime);
 
+		lblMemberNumber = new JLabel("회원 번호");
+		lblMemberNumber.setBounds(263, 0, 166, 15);
+		contentPane.add(lblMemberNumber);
+		
 		JButton btnSelectOrder = new JButton("주문 내역");
 		btnSelectOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				OrderHist oh = new OrderHist();
+				System.out.println(idFromPM);
+				int showOrderNum = dao.selectOrderChk(idFromPM).getOrderNumber();
+				System.out.println(showOrderNum);
+				String showOdNum = String.valueOf(showOrderNum);
+				OrderVO ov = dao.selectOrder(showOrderNum);
+				oh.setVisible(true);
+				oh.lblShowOrderNumber.setText(showOdNum);
+				oh.lblShowOrderName.setText(ov.getOrderProdName());
+				String showOdName = String.valueOf(ov.getOrderProdQty());
+				oh.lblShowOrderQty.setText(showOdName);
+				
 			}
 
 		});
 		btnSelectOrder.setBounds(12, 67, 131, 47);
 		contentPane.add(btnSelectOrder);
 
-		lblMemberNumber = new JLabel("회원 번호");
-		lblMemberNumber.setBounds(263, 0, 166, 15);
-		contentPane.add(lblMemberNumber);
 
 	} // end MemberLogin()
 
-	protected void prodOrder() {
-		// TODO Auto-generated method stub
-
-	}
 
 	public void setLblMember() {
 		lblMemberId.setText("회원 아이디 : " + idFromPM);
@@ -151,7 +163,6 @@ public class MemberLogin extends JFrame {
 	protected void updateMemTime() {
 		// 시간을 실시간으로 저장 시키기 위해서 필요한것. 현재 시간 정보가 필요.
 		dao.updateTime(idFromPM, lastTime);
-
 	}
 
 	public int startTime() {
