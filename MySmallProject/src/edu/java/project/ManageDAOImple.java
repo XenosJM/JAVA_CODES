@@ -13,6 +13,7 @@ import oracle.jdbc.OracleDriver;
 public class ManageDAOImple implements ManageDAO, OracleQuery {
 	// 싱글톤 디자인패턴
 	private static ManageDAOImple instance = null;
+
 	// private 생성자 = 함수를 사용하고 싶을때 생성자에서 부름
 	private ManageDAOImple() {
 		// TODO 생성자에 들어가야할 함수가 생기면 넣을것
@@ -83,9 +84,10 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_P_INSERT);
 			pstmt.setString(1, pv.getProdName());
-			pstmt.setString(2, pv.getProdInfo());
-			pstmt.setInt(3, pv.getProdSellPrice());
-			pstmt.setInt(4, pv.getProdQty());
+			pstmt.setString(2, pv.getProdKind());
+			pstmt.setString(3, pv.getProdInfo());
+			pstmt.setInt(4, pv.getProdSellPrice());
+			pstmt.setInt(5, pv.getProdQty());
 			result = pstmt.executeUpdate();
 			System.out.println(result + "행이 삽입됐습니다.");
 
@@ -254,7 +256,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				System.out.println(memberManager);
 				MemberVO mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail,
 						memberTime, memberManager);
-				list.add(mv); 
+				list.add(mv);
 			}
 			System.out.println("DB 작업완료");
 		} catch (SQLException e) {
@@ -357,10 +359,9 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return list;
 	}
 
-	
 	@Override
 	public ArrayList<OrderVO> selectOrder() {
-		System.out.println("DB 히스토리 검색 시작");
+		System.out.println("주문 검색 시작");
 		ArrayList<OrderVO> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -382,7 +383,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				String orderProdKind = rs.getString(5); // prod Kind
 
 				OrderVO ov = new OrderVO(orderNumber, memberId, orderProdName, orderProdQty, orderProdKind);
-				list.add(ov); // 나중에 이 리스트의 값에서 각 테이블의 히스토리값을 불러와서 나누는 작업을 메인해서 할것.
+				list.add(ov); // 나중에 이 리스트의 값에서 각 테이블의 히스토리값을 불러와서 나누는 작업을 메인에서 할것.
 			}
 			System.out.println("DB 작업완료");
 		} catch (SQLException e) {
@@ -401,7 +402,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return list;
 	} // end orderselect
 
-	
 	@Override
 	public HistoryVO selectHist(int histNumber) {
 		HistoryVO hv = new HistoryVO();
@@ -449,7 +449,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return hv;
 	}
 
-	
 	@Override
 	public MemberVO selectMem(String memberId) {
 		MemberVO mv = new MemberVO();
@@ -480,7 +479,8 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				int memberTime = rs.getInt(7);
 				int memberManager = rs.getInt(8);
 
-				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime, memberManager);
+				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime,
+						memberManager);
 				System.out.println(mv);
 			}
 		} catch (SQLException e) {
@@ -497,8 +497,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("선택검색 완료");
 		return mv;
 	}
-	
-	
+
 	@Override
 	public MemberVO selectMemAni(int memberNumber, String memberId, String memberName) {
 		System.out.println("아무거나 쿼리 시작");
@@ -532,7 +531,8 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				int memberTime = rs.getInt(7);
 				int memberManager = rs.getInt(8);
 
-				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime, memberManager);
+				mv = new MemberVO(memberNumber, memberId, memberPw, memberName, memberPhone, memberEmail, memberTime,
+						memberManager);
 				System.out.println(mv);
 			}
 		} catch (SQLException e) {
@@ -550,8 +550,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("아무거나 검색 완료");
 		return mv;
 	}
-	
-	
+
 	@Override
 	public ProductVO selectProd(String prodName) {
 		System.out.println(" 상품 검색 시작");
@@ -643,9 +642,9 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			}
 		}
 		return list;
-		
+
 	}
-	
+
 	@Override
 	public PcVO selectPc(int pcNumber) {
 		System.out.println("PC내역 상세검색 시작");
@@ -690,7 +689,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return pc;
 	}
 
-	
 	@Override
 	public OrderVO selectOrder(int orderNumber) {
 		System.out.println("주문 상세 검색 시작");
@@ -735,7 +733,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return ov;
 	}
 
-	
 	@Override
 	public int updateHist(int histNumber, HistoryVO hv) {
 		System.out.println("히스토리 내역 업데이트 시작");
@@ -766,7 +763,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			try {
 				pstmt.close();
 				conn.close();
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -776,10 +773,9 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-	
 	@Override
 	public int updateMem(String memberId, MemberVO mv) {
-		System.out.println("회원정보 수정 시작");
+		System.out.println("관리자 회원정보 수정 시작");
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -791,14 +787,20 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_M_UPDATE_MANAGER);
 
-			pstmt.setInt(1, mv.getMemberNumber());
-			pstmt.setString(2, mv.getMemberPw());
-			pstmt.setString(3, mv.getMemberName());
-			pstmt.setString(4, mv.getMemberPhone());
-			pstmt.setString(5, mv.getMemberEmail());
-			pstmt.setInt(6, mv.getMemberTime());
-			pstmt.setInt(7, mv.getMemberManager());
-			pstmt.setString(8, memberId);
+			pstmt.setString(1, mv.getMemberPw());
+//			System.out.println(mv.getMemberPw());
+			pstmt.setString(2, mv.getMemberName());
+//			System.out.println(mv.getMemberName());
+			pstmt.setString(3, mv.getMemberPhone());
+//			System.out.println(mv.getMemberPhone());
+			pstmt.setString(4, mv.getMemberEmail());
+//			System.out.println(mv.getMemberEmail());
+			pstmt.setInt(5, mv.getMemberTime());
+			System.out.println("mv.getMemberTime() = " + mv.getMemberTime());
+			pstmt.setInt(6, mv.getMemberManager());
+//			System.out.println(mv.getMemberManager());
+			pstmt.setString(7, memberId);
+//			System.out.println(mv.getMemberId());
 			result = pstmt.executeUpdate();
 
 			System.out.println(result + "행이 수정됐습니다.");
@@ -818,7 +820,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-	
 	@Override
 	public int updateMemUser(String memberId, MemberVO mv) {
 		System.out.println("사용자 정보 수정 시작");
@@ -859,7 +860,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-	
 	@Override
 	public int updateTime(String memberId, int memberTime) {
 		System.out.println("회원 시간 변동 수정");
@@ -873,7 +873,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_M_UPDATE_TIME_CHANGE);
-
 
 			pstmt.setInt(1, memberTime);
 			pstmt.setString(2, memberId);
@@ -895,8 +894,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("시간 저장 완료");
 		return result;
 	}
-	
-	
+
 	@Override
 	public int updateProd(int prodNumber, ProductVO pv) {
 		System.out.println("상품정보 업데이트 시작");
@@ -934,7 +932,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("DB작업 완료");
 		return result;
 	}
-	
+
 	@Override
 	public int updateProdUser(int prodNumber, ProductVO pv) {
 		System.out.println("상품수량 업데이트 시작");
@@ -949,11 +947,10 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_P_UPDATE_USER);
 
-			
 			pstmt.setInt(1, pv.getProdQty());
 			pstmt.setInt(2, prodNumber);
 			result = pstmt.executeUpdate();
-			
+
 			System.out.println(result + "행이 수정됐습니다.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -970,7 +967,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("DB작업 완료");
 		return result;
 	}
-	
+
 	@Override
 	public int updatePc(int pcNumber, PcVO pc) {
 		System.out.println("PC내역 업데이트 시작");
@@ -1007,8 +1004,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		System.out.println("DB작업 완료");
 		return result;
 	}
-	
-	
+
 	@Override
 	public int deleteHist(int histNumber) {
 		System.out.println("히스토리 내역 삭제 시작");
@@ -1048,7 +1044,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-	
 	@Override
 	public int deleteMem(int memberNumber) {
 		System.out.println("회원기록 삭제 시작");
@@ -1088,7 +1083,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-	
 	@Override
 	public int deleteProd(int prodNumber) {
 		System.out.println("상품정보 삭제 시작");
@@ -1128,7 +1122,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-	
 	@Override
 	public int deletePc(int pcNumber) {
 		System.out.println("PC내역 삭제 시작");
@@ -1168,8 +1161,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 		return result;
 	}
 
-
-	
 	@Override
 	public OrderVO selectOrderChk(String orderMemId) {
 		System.out.println("주문내역 체크 시작");
@@ -1188,10 +1179,10 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 
 			pstmt = conn.prepareStatement(SQL_M_ORDER_CHECK);
 			pstmt.setString(1, orderMemId);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				int orderNumber = rs.getInt(1);
 				System.out.println(orderNumber);
 //				orderMemId = rs.getString(2);
@@ -1202,10 +1193,10 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 //				System.out.println(orderProdQty);
 //				String orderProdKind = rs.getString(5);
 //				System.out.println(orderProdKind);
-				ov = new OrderVO(orderNumber, "0", "0", 0, "0");				
+				ov = new OrderVO(orderNumber, "0", "0", 0, "0");
 				System.out.println(ov);
 			}
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -1258,13 +1249,67 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			}
 		}
 		System.out.println("DB 작업완료");
-	
+
 		return result;
 
 	}
-	
 
+	@Override
+	public ArrayList<ProductVO> selectSearchByText(String keyword) {
+		ArrayList<ProductVO> list = new ArrayList<>();
 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null; // select query 결과 저장할 클래스
+		try {
+			DriverManager.registerDriver(new OracleDriver());
+			System.out.println("드라이버 로드 성공");
+
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			System.out.println("DB 연결 성공");
+
+			pstmt = conn.prepareStatement(SQL_SELECT_BY_TEXT);
+//			System.out.println("pstmt 준비 완료");
+//			System.out.println(keyword);
+			String likeKeyword = "%" + keyword + "%";
+			System.out.println(likeKeyword);
+			pstmt.setString(1, likeKeyword);
+//			System.out.println("여긴 통과");
+			pstmt.setString(2, likeKeyword);
+//			System.out.println("여기는");
+			pstmt.setString(3, likeKeyword);
+			
+			rs = pstmt.executeQuery();
+			System.out.println("쿼리 성공");
+			
+			while (rs.next()) { // 레코드가 존재할 때까지
+				int prodNumber = rs.getInt(1);
+				String prodName = rs.getString(2);
+				String prodKind = rs.getString(3);
+				String prodInfo = rs.getString(4);
+				int prodSellPrice = rs.getInt(5);
+				int prodQty = rs.getInt(6);				
+
+				ProductVO pv = new ProductVO(prodNumber, prodName, prodKind, prodInfo, prodSellPrice, prodQty);
+				System.out.println(pv);
+				list.add(pv);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("선택검색 완료");
+		}
+		return list;
+	}
 
 //	- 상품 판매
 
@@ -1273,7 +1318,6 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 //	- 회원 정보에서 관리자 체크 기능( 관리자인지 아닌지)	
 
 //	- 로그인 기능( 관리자면 로그인 성공 아닐시 실패)
-
 
 //	- PC사용 현황 체크
 

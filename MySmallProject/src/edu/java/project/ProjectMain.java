@@ -64,7 +64,7 @@ public class ProjectMain {
 		frame = new JFrame();		
         frame.setMinimumSize(new Dimension(600, 400));
         frame.setBounds(0, 0, 600, 400);
-        frame.setLocation(0, 0);
+        frame.setLocation(600, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
@@ -144,7 +144,7 @@ public class ProjectMain {
 					login.setLblMember();
 					login.currentTime();
 					login.setVisible(true);
-					login.startTime();
+//					login.startTime();
 					frame.setVisible(false);
 					
 				} else { // end managerId 체크

@@ -33,7 +33,7 @@ public class ManageAllSelectMember extends JPanel {
 	public ManageAllSelectMember() {
 		dao = ManageDAOImple.getInstance();
 
-		setBounds(0, 0, 862, 641);
+		setBounds(0, 0, 862, 401);
 		setLayout(null);
 
 		JButton btnSelectMemBy = new JButton("회원검색");
@@ -58,7 +58,21 @@ public class ManageAllSelectMember extends JPanel {
 		btnUpdateMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 관리자 멤버 업데이트 창 띄우게 하고 기능 정리
+				ManagerMemberUpdate mmu = new ManagerMemberUpdate();
+				try {
+					MemberVO mv = dao.selectMem((String) value);
+					if (mv != null && mv.getMemberId().equals((String) value)) {				
+						mmu.lblMemberId.setText(mv.getMemberId());
+						mmu.lblMemberNum.setText(String.valueOf(mv.getMemberNumber()));
+						mmu.setVisible(true);
+					}
+				} catch (Exception e2) {
+					pane.showMessageDialog(btnSelectMemBy, "정보 변경을 원하시는 아이디를 선택하고 회원 정보 변경버튼을 누르세요.");
+				}
+				
 			}
+				
+			
 		});
 		btnUpdateMember.setBounds(157, 10, 150, 23);
 		add(btnUpdateMember);
@@ -73,7 +87,7 @@ public class ManageAllSelectMember extends JPanel {
 		add(btnSearchHist);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 43, 862, 349);
+		scrollPane.setBounds(0, 43, 862, 358);
 		add(scrollPane);
 
 		tableModel = new DefaultTableModel(colNames, 0) {
@@ -97,10 +111,6 @@ public class ManageAllSelectMember extends JPanel {
 		});
 		table.setFont(new Font("굴림", Font.PLAIN, 15));
 		scrollPane.setViewportView(table);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(0, 444, 862, 197);
-		add(scrollPane_1);
 		selectAllMemberInfo();
 	}
 

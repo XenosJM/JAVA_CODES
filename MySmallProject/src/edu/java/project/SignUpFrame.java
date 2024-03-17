@@ -42,11 +42,17 @@ public class SignUpFrame extends JFrame {
 		JButton btnMemberInsert = new JButton("회원 가입완료");
 		btnMemberInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		
 				insertMem();
-				dispose();
+				if(dao.insertMem(mv) == 1) {
+					dispose();					
+				} else {
+					pane.showMessageDialog(btnMemberInsert, "빈칸이 존재합니다.");
+				}
+				
 			}
 		});
-		btnMemberInsert.setBounds(228, 280, 170, 78);
+		btnMemberInsert.setBounds(46, 280, 170, 78);
 		contentPane.add(btnMemberInsert);
 
 		textInputId = new JTextField();
@@ -98,12 +104,17 @@ public class SignUpFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				getMemInfo();
 				MemberVO chkId = dao.selectMem(mv.getMemberId());
-				if(mv.getMemberId().equals(chkId.getMemberId())) {
-					pane.showMessageDialog(contentPane, "이미 사용중인 아이디 입니다.");
+				
+					if (mv.getMemberId().equals(chkId.getMemberId())) {
+						pane.showMessageDialog(contentPane, "이미 사용중인 아이디 입니다.");
+				} else {
+					pane.showMessageDialog(btnCheckId, "사용 가능한 아이디입 니다.");
+
 				}
+
 			}
 		});
-		btnCheckId.setBounds(123, 11, 81, 44);
+		btnCheckId.setBounds(105, 11, 99, 44);
 		contentPane.add(btnCheckId);
 
 		JButton btnCheckEmail = new JButton("중복확인");
@@ -111,14 +122,26 @@ public class SignUpFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				getMemInfo();
 				MemberVO chkEm = dao.selectMem(mv.getMemberEmail());
-				if(mv.getMemberEmail().equals(chkEm.getMemberEmail())) {
-					pane.showMessageDialog(contentPane, "이미 사용중인 이메일 입니다.");
+					if (mv.getMemberEmail().equals(chkEm.getMemberEmail())) {
+						pane.showMessageDialog(contentPane, "이미 사용중인 이메일 입니다.");
+					
+				} else {
+					pane.showMessageDialog(btnCheckEmail, "사용 가능한 이메일 입니다.");
 				}
-				
+
 			}
 		});
-		btnCheckEmail.setBounds(123, 226, 81, 44);
+		btnCheckEmail.setBounds(105, 226, 99, 44);
 		contentPane.add(btnCheckEmail);
+		
+		JButton btnMemberInsertCancel = new JButton("회원가입 취소");
+		btnMemberInsertCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnMemberInsertCancel.setBounds(228, 280, 170, 78);
+		contentPane.add(btnMemberInsertCancel);
 
 		// GuiMain11의 btn1과 비교해보면 더 쉽게 이해 가능
 	}
@@ -130,16 +153,13 @@ public class SignUpFrame extends JFrame {
 		String name = textMemberName.getText();
 		String phone = textMemberPhone.getText();
 		String email = textMemberEmail.getText();
-		mv = new MemberVO(0, Id, Pw, name, phone, email, 0, 0);
+	    mv = new MemberVO(0, Id, Pw, name, phone, email, 0, 0);
 	}
 
 	public void insertMem() {
-		try {
+		
 			dao.insertMem(mv);
-		} catch (Exception e) {
-			pane.showMessageDialog(contentPane, "아이디 또는 이메일이 중복됩니다.");
-			e.printStackTrace();
-		}
+		
 //		dao.insertMem(mv);
 
 	}

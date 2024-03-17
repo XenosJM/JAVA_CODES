@@ -1,5 +1,6 @@
 package edu.java.project;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,13 +20,10 @@ public class OrderHist extends JFrame {
 	private JOptionPane pane;
 	protected JButton okButton, cancelButton;
 	protected JLabel lblOrderNumber, lblOrderName, lblOrderQty,
-	lblShowOrderNumber, lblShowOrderName, lblShowOrderQty, lblOrderMemId, lblOrderMemNum;
+	lblShowOrderNumber, lblShowOrderName, lblShowOrderQty, lblOrderMemId, lblOrderMemNum, lblShowOrderKind;
 	
 	public OrderHist() {
 		dao = ManageDAOImple.getInstance();
-		setBounds(100, 100, 450, 308);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
 
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
@@ -35,7 +33,7 @@ public class OrderHist extends JFrame {
 		getContentPane().add(contentPanel);
 
 		lblOrderNotice = new JLabel("마지막 주문 내역");
-		lblOrderNotice.setBounds(114, 50, 97, 23);
+		lblOrderNotice.setBounds(112, 9, 97, 23);
 		getContentPane().add(lblOrderNotice);
 
 		JPanel buttonPane = new JPanel();
@@ -69,36 +67,44 @@ public class OrderHist extends JFrame {
 		buttonPane.add(cancelButton);
 		
 		lblOrderNumber = new JLabel("주문 번호");
-		lblOrderNumber.setBounds(65, 78, 104, 40);
+		lblOrderNumber.setBounds(65, 49, 104, 33);
 		getContentPane().add(lblOrderNumber);
 		
 		lblOrderName = new JLabel("상품 이름");
-		lblOrderName.setBounds(65, 128, 104, 40);
+		lblOrderName.setBounds(65, 135, 104, 33);
 		getContentPane().add(lblOrderName);
 		
 		lblOrderQty = new JLabel("상품 개수");
-		lblOrderQty.setBounds(65, 178, 104, 40);
+		lblOrderQty.setBounds(65, 175, 104, 33);
 		getContentPane().add(lblOrderQty);
 		
 		lblShowOrderNumber = new JLabel("표시할 주문 번호");
-		lblShowOrderNumber.setBounds(181, 78, 104, 40);
+		lblShowOrderNumber.setBounds(181, 49, 104, 33);
 		getContentPane().add(lblShowOrderNumber);
 		
 		lblShowOrderName = new JLabel("표시할 상품 이름");
-		lblShowOrderName.setBounds(181, 128, 104, 40);
+		lblShowOrderName.setBounds(181, 135, 104, 33);
 		getContentPane().add(lblShowOrderName);
 		
 		lblShowOrderQty = new JLabel("표시할 상품 개수");
-		lblShowOrderQty.setBounds(181, 178, 104, 40);
+		lblShowOrderQty.setBounds(181, 178, 104, 33);
 		getContentPane().add(lblShowOrderQty);
 		
 		lblOrderMemId = new JLabel("주문한 회원아이디");
-		lblOrderMemId.setBounds(181, 0, 104, 40);
+		lblOrderMemId.setBounds(310, 41, 124, 40);
 		getContentPane().add(lblOrderMemId);
 		
 		lblOrderMemNum = new JLabel("주문한 회원번호");
-		lblOrderMemNum.setBounds(65, 0, 104, 40);
+		lblOrderMemNum.setBounds(310, 0, 124, 40);
 		getContentPane().add(lblOrderMemNum);
+		
+		JLabel lblOrderKind = new JLabel("상품 종류");
+		lblOrderKind.setBounds(65, 92, 104, 33);
+		getContentPane().add(lblOrderKind);
+		
+		lblShowOrderKind = new JLabel("표시할 상품 종류");
+		lblShowOrderKind.setBounds(181, 92, 104, 33);
+		getContentPane().add(lblShowOrderKind);
 
 	}
 
@@ -106,5 +112,4 @@ public class OrderHist extends JFrame {
 		
 		dao.orderCancel(orderNumber);
 	}
-
 }

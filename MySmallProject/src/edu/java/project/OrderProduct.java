@@ -22,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.JMenuBar;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.JTextField;
 
 public class OrderProduct extends JDialog {
 	private ManageDAO dao;
@@ -35,7 +36,9 @@ public class OrderProduct extends JDialog {
 	private JTable tableAllProd;
 	private Object value;
 	protected JLabel lblChoiceProdName, lblSumPrice, lblOrderMember;
+	private String keyword;
 	private JSpinner spinnerChoiceProdQty;
+	private JTextField textSearchKeyword;
 	
 	/**
 	 * Create the dialog.
@@ -56,21 +59,19 @@ public class OrderProduct extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-			
-			
-			public void actionPerformed(ActionEvent e) {
-				//TODO 상품 구매가 최종적으로 진행될 공간, 인서트될 공간
+		okButton = new JButton("주문");
+		okButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				try {
 					// 이름으로 검색한 결과값이 누른 밸류값과 다르면 떠야한다.
 					ProductVO pv = dao.selectProd((String) value);
-					System.out.println(pv);
-					System.out.println(value);
+//					System.out.println(pv);
+//					System.out.println(value);
 					if (pv.getProdName() == null) {						
 						pane.showMessageDialog(scrollPane, "상품명을 클릭하고 구매버튼을 눌러주세요.");	
 						if(pv.getProdName().equals((int)value)) {
-							pane.showMessageDialog(scrollPane, "상품명을 클릭하고 구매버튼을 눌러주세요.");	
+							pane.showMessageDialog(scrollPane, "상품명을 클릭하고 구매버튼을 눌러주세요.");
 						}
 					}
 					// 처리를 할때 pv에서 업데이트 시키냐 새로 인서트 시키냐 의 차이에서 아무래도 새 주문이 들어가니까
@@ -86,27 +87,24 @@ public class OrderProduct extends JDialog {
 					int prodQty = pv.getProdQty();
 					ProductVO upv = new ProductVO(prodNumber, "0", "0", "0", 0, prodQty-spinProdQty);				
 					dao.updateProdUser(prodNumber, upv); // TODO 팔린만큼 감소 처리 할것, 임시방편으로 잊지않기위해 짠 코드
+					dispose();
 					
 					
 				} catch (Exception e2) {
 					// TODO: handle exception
 					pane.showMessageDialog(scrollPane, "상품명을 클릭하고 구매버튼을 눌러주세요.");
 				}
-				dispose();
-			
 			}
 		});
-		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 
-		cancelButton = new JButton("Cancel");
+		cancelButton = new JButton("취소");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
 		
 		tableModel = new DefaultTableModel(colNames, 0) {
@@ -123,7 +121,7 @@ public class OrderProduct extends JDialog {
 				int row = tableAllProd.getSelectedRow();
 				int col = tableAllProd.getSelectedColumn();
 				Object value = tableAllProd.getValueAt(row, col);
-				System.out.println(value);
+//				System.out.println(value);
 				getTextValue(value);				
 				ProductVO pv = dao.selectProd((String) value);
 				int spinProdQty = (int) spinnerChoiceProdQty.getValue();
@@ -201,13 +199,29 @@ public class OrderProduct extends JDialog {
 		});
 		menuBar.add(btnSnackList);
 		
-		JButton btnTimeList = new JButton("시간");
+		JButton btnTimeList = new JButton("요금제");
 		btnTimeList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				selectProductTime();
 			}
 		});
 		menuBar.add(btnTimeList);
+		
+		textSearchKeyword = new JTextField();
+		textSearchKeyword.setColumns(10);
+		menuBar.add(textSearchKeyword);
+		
+		JButton btnSearch = new JButton("검색");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO 검색기능 상품테이블에서의 검색만 처리
+				System.out.println(textSearchKeyword.getText());
+				keyword = textSearchKeyword.getText();
+				System.out.println(keyword);
+				selectSearchByText(textSearchKeyword.getText());
+			}
+		});
+		menuBar.add(btnSearch);
 
  /*
 		textField = new JTextField();
@@ -225,6 +239,22 @@ public class OrderProduct extends JDialog {
   */		
 		
 	} // end OrderProduct()
+
+
+	protected void selectSearchByText(String text) {
+		System.out.println(keyword);
+		ArrayList<ProductVO> list = dao.selectSearchByText(keyword);
+		ProductVO pv = null;
+		tableModel.setRowCount(0);
+		for (int i = 0; i < list.size(); i++) {
+			pv = list.get(i);
+			records[0] = pv.getProdName();
+			records[1] = pv.getProdKind();
+			records[2] = pv.getProdInfo();
+			records[3] = pv.getProdSellPrice();
+			tableModel.addRow(records);
+		}
+	}
 
 
 	private void selectProductAll() {
@@ -281,7 +311,7 @@ public class OrderProduct extends JDialog {
 	}
 	
 	private void selectProductTime() {
-		ArrayList<ProductVO> list = dao.selectProdKind("시간");
+		ArrayList<ProductVO> list = dao.selectProdKind("요금제");
 		tableModel.setRowCount(0);
 		for (int i = 0; i < list.size(); i++) {
 			ProductVO pv = list.get(i);

@@ -74,8 +74,10 @@ public interface ManageDAO {
 	public abstract OrderVO selectOrderChk(String orderMemId);
 //	- 주문 취소
 	public abstract int orderCancel(int orderNumber);
-//  - 로그인
-//	public abstract int loginMember(int )
+//	- 키워드 검색
+	public abstract ArrayList<ProductVO> selectSearchByText(String keyword);
+	
+
 
 	
 //	- 구매 가격판매 가격 제외한 내용 업데이트
@@ -83,10 +85,6 @@ public interface ManageDAO {
 //	- 상품 판매
 	
 //	- 회원 정보 창
-	
-//	- 회원 정보에서 관리자 체크 기능( 관리자인지 아닌지)	
-	
-//	- 로그인 기능( 관리자면 로그인 성공 아닐시 실패)
 	
 //	- 회원 남은 시간 추가 기능(상품결제와는 다르게 추가로)
 	

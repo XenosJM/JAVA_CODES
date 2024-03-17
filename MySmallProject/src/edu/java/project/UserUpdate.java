@@ -54,7 +54,7 @@ public class UserUpdate extends JFrame {
 				dispose();
 			}
 		});
-		btnMemberUpdate.setBounds(164, 281, 170, 78);
+		btnMemberUpdate.setBounds(12, 298, 151, 66);
 		contentPane.add(btnMemberUpdate);
 
 		textMemberName = new JTextField();
@@ -99,6 +99,15 @@ public class UserUpdate extends JFrame {
 		lblMemberNum = new JLabel("회원 번호");
 		lblMemberNum.setBounds(198, 10, 59, 44);
 		contentPane.add(lblMemberNum);
+		
+		JButton btnMemberUpdateCancel = new JButton("회원 정보 수정 취소");
+		btnMemberUpdateCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnMemberUpdateCancel.setBounds(183, 298, 151, 66);
+		contentPane.add(btnMemberUpdateCancel);
 
 		// GuiMain11의 btn1과 비교해보면 더 쉽게 이해 가능
 	}
@@ -118,7 +127,5 @@ public class UserUpdate extends JFrame {
 		dao.updateMemUser(id, mv);
 		System.out.println("수정 완료");
 	}
-
-	
 }
 

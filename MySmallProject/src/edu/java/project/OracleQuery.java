@@ -44,6 +44,8 @@ public interface OracleQuery {
 	String COL_ORDER_P_NAME = "PRODUCT_NAME";
 	String COL_ORDER_P_QTY = "PRODUCT_QUANTITY";
 	String COL_ORDER_P_KIND = "PRODUCT_KIND";
+	
+	
 	//=================================================== 히스토리 쿼리
 	// 데이터 등록
 		public static final String SQL_H_INSERT = "INSERT INTO " + TABLE_HISTORY
@@ -86,6 +88,18 @@ public interface OracleQuery {
 		public static final String SQL_SELECT_BY_USER_HISTORY = 
 				"SELECT " + COL_H_NUMBER + ", " + COL_H_DATE + ", " + COL_MEMHIST + 
 				", " + COL_ORDERHIST + " FROM " + TABLE_HISTORY + " WHERE " + COL_MEMHIST + " LIKE '%?%'";
+		// 오더넘버와 프로덕트 이름과 히스토리내역을 참조해서 검색하는 쿼리 짜기
+		
+		// 입력받은 텍스트값을 기준으로 검색하는 쿼리
+		public static final String SQL_SELECT_BY_TEXT = 
+				"SELECT * FROM " + TABLE_PRODUCT + " WHERE " + COL_P_NAME + " LIKE ? " +
+						"OR " + COL_P_KIND + " LIKE  ? " + 
+						"OR " + COL_P_INFO + " LIKE  ?";
+//		public static final String SQL_SELECT_BY_TEXT = 
+//			    "SELECT * FROM " + TABLE_PRODUCT + 
+//			    " WHERE " + COL_P_NAME + " LIKE ?" +
+//			    " OR " + COL_P_KIND + " LIKE ?" + 
+//			    " OR " + COL_P_INFO + " LIKE ?";
 		// 판매 기록 검색
 		public static final String SQL_SELECT_BY_SELL_PROD = 
 				"SELECT " + COL_H_NUMBER + ", " + COL_H_DATE + ", " + COL_PRODHIST + 
@@ -130,7 +144,6 @@ public interface OracleQuery {
 	
 	public static final String SQL_M_UPDATE_MANAGER =  
 		    "UPDATE " + TABLE_MEMBER + " SET " + 
-		    		COL_M_ID + " = COALESCE(?, " + COL_M_ID + "), " +
 		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
 		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
 		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
@@ -145,10 +158,10 @@ public interface OracleQuery {
 		        COL_M_TIME + " = ? " +
 		        "WHERE " + COL_M_ID + " = ?";
 //	 시간 충전
-	public static final String SQL_M_TIME_CHARGE =  
-			"UPDATE " + TABLE_MEMBER + " SET " +
-					COL_M_TIME + " = ? " + COL_M_TIME + // 기존 시간값에 +한 값을 ?에
-					"WHERE " + COL_M_NUMBER + " = ?";
+//	public static final String SQL_M_TIME_CHARGE =  
+//			"UPDATE " + TABLE_MEMBER + " SET " +
+//					COL_M_TIME + " = ? " + COL_M_TIME + // 기존 시간값에 +한 값을 ?에
+//					"WHERE " + COL_M_NUMBER + " = ?";
 
 //	 회원 정보 변경
 //	public static final String SQL_M_UPDATE_USER = // 회원가입 당시 정보를 db에서 받아오고 SET 시킨다음 바꿀정보를 바꾸고 나머지는 다시 그대로 저장하도록. 
@@ -185,7 +198,7 @@ public interface OracleQuery {
 	// ======================================================================================
 	// 데이터 등록
 		public static final String SQL_P_INSERT = "INSERT INTO " + TABLE_PRODUCT
-				+ " VALUES (SEQ_PRODUCT.NEXTVAL, ?, ?, ?, ?)";
+				+ " VALUES (SEQ_PRODUCT.NEXTVAL, ?, ?, ?, ?, ?)";
 		// 재고 관리
 		public static final String SQL_P_UPDATE_MANAGER = 
 				"UPDATE " + TABLE_PRODUCT + " SET " + 

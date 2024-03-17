@@ -78,32 +78,33 @@ public class ManagerLogin extends JFrame {
 			
 		});
 
-		JButton btnTimeCharge = new JButton("회원 시간 충전");
-		btnTimeCharge.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// 현재 판넬 제거
-				getContentPane().remove(currentComponent);
-				revalidate(); // 컴퍼넌트 재검토
-				repaint(); // 컴퍼넌트 다시 그림
-
-				// 로그인 했을 때 보여줄 판넬 추가
-				ManageTimeCharge mtc = new ManageTimeCharge();
-
-				// 로그인 판넬을 프레임에 연결
-				getContentPane().add(mtc, BorderLayout.CENTER);
-				revalidate();
-				repaint();
-
-				currentComponent = mtc;
-
-			}
-		});
-		menuBar.add(btnTimeCharge);
+//		JButton btnTimeCharge = new JButton("회원 시간 충전");
+//		btnTimeCharge.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				UserTimeCharge utc = new UserTimeCharge();
+//				utc.setVisible(true);
+//				}
+//		});
+//		menuBar.add(btnTimeCharge);
 		
 		JButton btnCheckOrder = new JButton("주문확인");
 		btnCheckOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
+				// 현재 판넬 제거
+				getContentPane().remove(currentComponent);
+				revalidate(); // 컴퍼넌트 재검토
+				repaint(); // 컴퍼넌트 다시 그림
+				textPaneNotice.setVisible(false);
+				// 로그인 했을 때 보여줄 판넬 추가
+				ManagerCheckOrderPanel mco = new ManagerCheckOrderPanel();
+
+				// 로그인 판넬을 프레임에 연결
+				getContentPane().add(mco, BorderLayout.CENTER);
+				revalidate();
+				repaint();
+
+				currentComponent = mco;
 			}
 		});
 		menuBar.add(btnCheckOrder);
@@ -114,9 +115,22 @@ public class ManagerLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
 				ProductManage prodMg = new ProductManage();
+//				System.out.println("주시중");
+				prodMg.keyword = prodMg.textSearchKeyword.getText();;
 				prodMg.setVisible(true);
 			}
 		});
+		
+		JButton btnSearchHist = new JButton("기록 검색");
+		btnSearchHist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				AllHistorySearch ahs = new AllHistorySearch();
+				ahs.setVisible(true);
+				
+			}
+		});
+		menuBar.add(btnSearchHist);
 
 		JButton btnManagerLogout = new JButton("로그아웃");
 		menuBar.add(btnManagerLogout);
