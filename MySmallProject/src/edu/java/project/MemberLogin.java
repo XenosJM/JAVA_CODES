@@ -143,12 +143,12 @@ public class MemberLogin extends JFrame {
 
 
 	} // end MemberLogin()
-	protected void addTime(int hour) {
-		sumTime = lastTime+hour;
-		dao.updateTime(lblMemberId.getText(), sumTime);
-		lastTime = sumTime;
-		
-	}
+//	protected void addTime(int hour) {
+//		sumTime = lastTime+hour;
+//		dao.updateTime(lblMemberId.getText(), sumTime);
+//		lastTime = sumTime;
+//		
+//	}
 
 	protected void timeChanger() { //플래그 기능에 사용될 녀석
 
@@ -174,19 +174,10 @@ public class MemberLogin extends JFrame {
 //		MemberVO mtime = refreshMem();
 		time = refreshMem().getMemberTime();
 		timer = new Timer();
-		delayTime = 1;
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
 //				System.out.println("시작");
-				if(timeChange) {
-//					System.out.println("timeChange = " + timeChange);
-//					System.out.println("time = " + time);
-					time = refreshMem().getMemberTime();
-//					System.out.println("time = " + time);
-					timeChange = false;
-//					System.out.println("timeChange = " + timeChange);
-				} else {
 					
 				time--;
 				hour = time / 3600;
@@ -202,12 +193,12 @@ public class MemberLogin extends JFrame {
 					updateMemTime();
 					timer.cancel();
 					pm.frame.setVisible(true);
-					}
+					
 				}
 			}
 //					System.out.println("시간 표시 왜 안돼니?");
 		};
-		timer.schedule(timerTask, delayTime, 1000);
+		timer.schedule(timerTask, 0, 1000);
 		btnUserQuit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -226,7 +217,7 @@ public class MemberLogin extends JFrame {
 
 	protected void updateMemTime() {
 		// 시간을 실시간으로 저장 시키기 위해서 필요한것. 현재 시간 정보가 필요.
-		dao.updateTime(idFromPM, sumTime);
+		dao.updateTime(idFromPM, lastTime);
 	}
 
 	public int startTime() {

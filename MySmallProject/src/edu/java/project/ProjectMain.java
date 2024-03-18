@@ -29,7 +29,7 @@ public class ProjectMain {
 	protected JFrame frame;
 	private static ManageDAO dao;
 	private JOptionPane pane;
-	MemberVO mv = new MemberVO();
+	MemberVO mv;
 	private JPasswordField inputPassword;
 	private JTextField textInputId;
 	
@@ -125,6 +125,7 @@ public class ProjectMain {
 	} // end initialize()
 	
 	protected void memberLogin() {
+		mv = new MemberVO();
 		String id = textInputId.getText();
 		char[] pwChar = inputPassword.getPassword();
 		String pw = String.valueOf(pwChar);

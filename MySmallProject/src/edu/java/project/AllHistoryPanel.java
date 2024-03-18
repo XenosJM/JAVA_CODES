@@ -3,7 +3,9 @@ package edu.java.project;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -11,22 +13,27 @@ import javax.swing.table.DefaultTableModel;
 
 public class AllHistoryPanel extends JPanel {
 
-	private String[] colNames = { "상품이름", "상품종류", "상품정보", "상품가격" };
+	private String[] colNames = { "기록번호", "기록날짜", "회원기록", "상품기록", "PC기록", "주문기록" };
 	private Object[] records = new Object[colNames.length];
 	private DefaultTableModel tableModel;
+	private ManageDAO dao;
 	private JTable table;
+	private Object value;
+	private JOptionPane pane;
 
 	/**
 	 * Create the panel.
 	 */
 	public AllHistoryPanel() {
-		setBounds(100, 100, 922, 536);
+		dao = ManageDAOImple.getInstance();
+		setBounds(0, 0, 922, 536);
 		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 922, 536);
 		add(scrollPane);
-
+		
+		
 		tableModel = new DefaultTableModel(colNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -41,30 +48,36 @@ public class AllHistoryPanel extends JPanel {
 				int row = table.getSelectedRow();
 				int col = table.getSelectedColumn();
 				Object value = table.getValueAt(row, col);
-//				System.out.println(value);
+				System.out.println(value);
 				getTextValue(value);
-//				ProductVO pv = dao.selectProd((String) value);
-//				int spinProdQty = (int) spinnerChoiceProdQty.getValue();
-//				int sum = pv.getProdSellPrice() * spinProdQty;
-//				System.out.println(sum);
-//				String strSum = String.valueOf(sum);
-//				System.out.println(strSum);
-//				lblSumPrice.setText("계산하실 금액 : " + strSum);
-//				try {
-//					lblChoiceProdName.setText((String) value);
-//
-//				} catch (Exception e2) {
-//					pane.showMessageDialog(scrollPane, "상품명을 클릭하고 구매버튼을 눌러주세요.");
-//				}
+//			
 			}
 		});
 		table.setFont(new Font("굴림", Font.PLAIN, 15));
 		scrollPane.setViewportView(table);
+		getHistAll();
 	}
 
-	protected void getTextValue(Object value) {
-		// TODO Auto-generated method stub
+	private void getHistAll() {
+		ArrayList<HistoryVO> list = dao.selectHist();
+		tableModel.setRowCount(0);
+		for (int i = 0; i < list.size(); i++) {
+			HistoryVO hv = list.get(i);
+			records[0] = hv.getHistNumber();
+			records[1] = hv.getHistDate();
+			records[2] = hv.getHistMem();
+			records[3] = hv.getHistProd();
+			records[4] = hv.getHistPC();
+			records[5] = hv.getHistOrder();
+			tableModel.addRow(records);
+		}
 		
 	}
 
+	protected void getTextValue(Object value) {
+		this.value = value;
+		
+	}
+	
+	
 }

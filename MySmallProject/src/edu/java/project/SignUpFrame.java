@@ -42,14 +42,9 @@ public class SignUpFrame extends JFrame {
 		JButton btnMemberInsert = new JButton("회원 가입완료");
 		btnMemberInsert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
+//				getMemInfo();
 				insertMem();
-				if(dao.insertMem(mv) == 1) {
-					dispose();					
-				} else {
-					pane.showMessageDialog(btnMemberInsert, "빈칸이 존재합니다.");
-				}
-				
+				dispose();
 			}
 		});
 		btnMemberInsert.setBounds(46, 280, 170, 78);
@@ -157,7 +152,13 @@ public class SignUpFrame extends JFrame {
 	}
 
 	public void insertMem() {
-		
+		String Id = textInputId.getText();
+		char[] PwChar = inputPassword.getPassword();
+		String Pw = String.valueOf(PwChar);
+		String name = textMemberName.getText();
+		String phone = textMemberPhone.getText();
+		String email = textMemberEmail.getText();
+	    mv = new MemberVO(0, Id, Pw, name, phone, email, 0, 0);
 			dao.insertMem(mv);
 		
 //		dao.insertMem(mv);

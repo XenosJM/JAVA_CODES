@@ -125,13 +125,13 @@ public class ProductManage extends JDialog {
 		});
 		buttonPane_1.add(btnAddProd);
 		
-		JButton btnDeleteProd = new JButton("상품삭제");
-		btnDeleteProd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		buttonPane_1.add(btnDeleteProd);
+//		JButton btnDeleteProd = new JButton("상품삭제");
+//		btnDeleteProd.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO
+//			}
+//		});
+//		buttonPane_1.add(btnDeleteProd);
 
 		tableModel = new DefaultTableModel(colNames, 0) {
 			@Override

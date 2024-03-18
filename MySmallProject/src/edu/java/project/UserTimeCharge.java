@@ -54,7 +54,7 @@ public class UserTimeCharge extends JFrame {
 				login.lblMemberId.setText(lblUtcMemberId.getText());
 //				timer = login.timer;
 //				login.timer.cancel();
-				login.addTime(threeHour);
+//				login.addTime(threeHour);
 				login.currentTime();
 			}
 		});
@@ -70,7 +70,7 @@ public class UserTimeCharge extends JFrame {
 				login.lblMemberId.setText(lblUtcMemberId.getText());
 //				timer = login.timer;
 //				login.timer.cancel();
-				login.addTime(fiveHour);
+//				login.addTime(fiveHour);
 				login.currentTime();
 			}
 		});
@@ -86,7 +86,7 @@ public class UserTimeCharge extends JFrame {
 				login.lblMemberId.setText(lblUtcMemberId.getText());
 //				timer = login.timer;
 //				login.timer.cancel();
-				login.addTime(tenHour);
+//				login.addTime(tenHour);
 				login.currentTime();
 			}
 		});
@@ -102,7 +102,7 @@ public class UserTimeCharge extends JFrame {
 				login.lblMemberId.setText(lblUtcMemberId.getText());
 //				timer = login.timer;
 //				login.timer.cancel();
-				login.addTime(twentyHour);
+//				login.addTime(twentyHour);
 				login.currentTime();
 			}
 		});

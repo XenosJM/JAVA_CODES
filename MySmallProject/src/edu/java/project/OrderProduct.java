@@ -80,7 +80,7 @@ public class OrderProduct extends JDialog {
 					String prodName = pv.getProdName();
 					int spinProdQty = (int) spinnerChoiceProdQty.getValue();
 					String prodKind = pv.getProdKind();
-					OrderVO ov = new OrderVO(0, memberId, prodName, spinProdQty, prodKind);
+					OrderVO ov = new OrderVO(0, memberId, prodName, prodKind, spinProdQty);
 					dao.insertOrder(ov);
 
 					int prodNumber = pv.getProdNumber();
@@ -118,6 +118,7 @@ public class OrderProduct extends JDialog {
 		tableAllProd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
 				int row = tableAllProd.getSelectedRow();
 				int col = tableAllProd.getSelectedColumn();
 				Object value = tableAllProd.getValueAt(row, col);
@@ -130,7 +131,7 @@ public class OrderProduct extends JDialog {
 				String strSum = String.valueOf(sum);
 //				System.out.println(strSum);
 				lblSumPrice.setText("계산하실 금액 : " + strSum);
-				try {
+				
 					lblChoiceProdName.setText((String) value);
 					
 				} catch (Exception e2) {

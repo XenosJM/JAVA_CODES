@@ -4,22 +4,26 @@ public class OrderVO {
 	private int orderNumber;
 	private String orderMemId;
 	private String orderProdName;
-	private int orderProdQty;
 	private String orderProdKind;
+	private int orderProdQty;
 	
 	public OrderVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderVO(int orderNumber, String orderMemId, String orderProdName, int orderProdQty, String orderProdKind) {
+	
+
+	public OrderVO(int orderNumber, String orderMemId, String orderProdName, String orderProdKind, int orderProdQty) {
 		super();
 		this.orderNumber = orderNumber;
 		this.orderMemId = orderMemId;
 		this.orderProdName = orderProdName;
-		this.orderProdQty = orderProdQty;
 		this.orderProdKind = orderProdKind;
+		this.orderProdQty = orderProdQty;
 	}
+
+
 
 	public int getOrderNumber() {
 		return orderNumber;

@@ -2,7 +2,7 @@ package edu.java.project;
 
 public interface OracleQuery {
 	public static final String URL = 
-			"jdbc:oracle:thin:@localhost:1521:xe"; // 접속할 오라클 DB 경로
+			"jdbc:oracle:thin:@192.168.0.120:1521:xe"; // 접속할 오라클 DB 경로
 	public static final String USER = "scott";
 	public static final String PASSWORD = "tiger";
 
@@ -129,28 +129,30 @@ public interface OracleQuery {
 			"UPDATE " + TABLE_HISTORY + " SET " + 
 					COL_MEMHIST + " = ? " + // ?에는 String 값
 					"WHERE " + COL_H_NUMBER + " = ?";
-	관리자 회원 정보 수정
+					
+	*/
+	
+//	관리자 회원 정보 수정
 	public static final String SQL_M_UPDATE_MANAGER =  
 			"UPDATE " + TABLE_MEMBER + " SET " + 
-					COL_M_ID + " = ?, " +
 					COL_M_PW + " = ?, " +
 					COL_M_NAME + " = ?, " +
 					COL_M_PHONE + " = ?, " +
 					COL_M_EMAIL + " = ?, " +
 					COL_M_TIME + " = ?, " +
 					COL_M_MANAGER_ID + " = ? " +
-					"WHERE " + COL_M_NUMBER + " = ?";
-*/
+					"WHERE " + COL_M_ID + " = ?";
+
 	
-	public static final String SQL_M_UPDATE_MANAGER =  
-		    "UPDATE " + TABLE_MEMBER + " SET " + 
-		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
-		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
-		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
-		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + "), " +
-		    		COL_M_TIME + " = COALESCE(?, " + COL_M_TIME + "), " +
-		    		COL_M_MANAGER_ID + " = COALESCE(?, " + COL_M_MANAGER_ID + ") " +
-		    "WHERE " + COL_M_ID + " = ?";
+//	public static final String SQL_M_UPDATE_MANAGER =  
+//		    "UPDATE " + TABLE_MEMBER + " SET " + 
+//		    		COL_M_PW + " = COALESCE(?, " + COL_M_PW + "), " +
+//		    		COL_M_NAME + " = COALESCE(?, " + COL_M_NAME + "), " +
+//		    		COL_M_PHONE + " = COALESCE(?, " + COL_M_PHONE + "), " +
+//		    		COL_M_EMAIL + " = COALESCE(?, " + COL_M_EMAIL + "), " +
+//		    		COL_M_TIME + " = COALESCE(?, " + COL_M_TIME + "), " +
+//		    		COL_M_MANAGER_ID + " = COALESCE(?, " + COL_M_MANAGER_ID + ") " +
+//		    "WHERE " + COL_M_ID + " = ?";
 	
 	// 회원 남은시간 변화시. 충전, 사용종료
 	public static final String SQL_M_UPDATE_TIME_CHANGE =  

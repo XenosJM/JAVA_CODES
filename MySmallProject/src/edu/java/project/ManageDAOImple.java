@@ -48,6 +48,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			System.out.println("DB 연결 성공");
 			pstmt = conn.prepareStatement(SQL_M_INSERT);
 			pstmt.setString(1, mv.getMemberId());
+			System.out.println(mv.getMemberId());
 			pstmt.setString(2, mv.getMemberPw());
 			pstmt.setString(3, mv.getMemberName());
 			pstmt.setString(4, mv.getMemberPhone());
@@ -155,8 +156,8 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 			pstmt = conn.prepareStatement(SQL_ORDER_ADD);
 			pstmt.setString(1, ov.getOrderMemId());
 			pstmt.setString(2, ov.getOrderProdName());
-			pstmt.setInt(3, ov.getOrderProdQty());
-			pstmt.setString(4, ov.getOrderProdKind());
+			pstmt.setString(3, ov.getOrderProdKind());
+			pstmt.setInt(4, ov.getOrderProdQty());
 			result = pstmt.executeUpdate();
 			System.out.println(result + "행이 삽입됐습니다.");
 
@@ -379,10 +380,10 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				int orderNumber = rs.getInt(1);
 				String memberId = rs.getString(2); // member id
 				String orderProdName = rs.getString(3); // Prod Name
-				int orderProdQty = rs.getInt(4); // Prod Qty
-				String orderProdKind = rs.getString(5); // prod Kind
+				String orderProdKind = rs.getString(4); // prod Kind
+				int orderProdQty = rs.getInt(5); // Prod Qty
 
-				OrderVO ov = new OrderVO(orderNumber, memberId, orderProdName, orderProdQty, orderProdKind);
+				OrderVO ov = new OrderVO(orderNumber, memberId, orderProdName, orderProdKind, orderProdQty);
 				list.add(ov); // 나중에 이 리스트의 값에서 각 테이블의 히스토리값을 불러와서 나누는 작업을 메인에서 할것.
 			}
 			System.out.println("DB 작업완료");
@@ -404,6 +405,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 
 	@Override
 	public HistoryVO selectHist(int histNumber) {
+		System.out.println("히스토리 상세 검색");
 		HistoryVO hv = new HistoryVO();
 
 		Connection conn = null;
@@ -451,6 +453,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 
 	@Override
 	public MemberVO selectMem(String memberId) {
+		System.out.println("사용자 상세 검색");
 		MemberVO mv = new MemberVO();
 
 		Connection conn = null;
@@ -713,10 +716,10 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 				orderNumber = rs.getInt(1);
 				String orderMemId = rs.getString(2);
 				String orderProdName = rs.getString(3);
-				int orderProdQty = rs.getInt(4);
-				String orderProdKind = rs.getString(5);
+				String orderProdKind = rs.getString(4);
+				int orderProdQty = rs.getInt(5);
 
-				ov = new OrderVO(orderNumber, orderMemId, orderProdName, orderProdQty, orderProdKind);
+				ov = new OrderVO(orderNumber, orderMemId, orderProdName, orderProdKind, orderProdQty);
 				System.out.println(ov);
 			}
 		} catch (SQLException e) {
@@ -1193,7 +1196,7 @@ public class ManageDAOImple implements ManageDAO, OracleQuery {
 //				System.out.println(orderProdQty);
 //				String orderProdKind = rs.getString(5);
 //				System.out.println(orderProdKind);
-				ov = new OrderVO(orderNumber, "0", "0", 0, "0");
+				ov = new OrderVO(orderNumber, "0", "0", "0", 0);
 				System.out.println(ov);
 			}
 

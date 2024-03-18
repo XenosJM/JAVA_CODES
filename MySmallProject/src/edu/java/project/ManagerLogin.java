@@ -32,29 +32,29 @@ public class ManagerLogin extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JButton btnPCManage = new JButton("PC관리");
-		btnPCManage.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				// 현재 판넬 제거
-				getContentPane().remove(currentComponent);
-				revalidate(); // 컴퍼넌트 재검토
-				repaint(); // 컴퍼넌트 다시 그림
-				textPaneNotice.setVisible(false);
-				// 로그인 했을 때 보여줄 판넬 추가
-				PCManagePanel PC = new PCManagePanel();
-
-				// 로그인 판넬을 프레임에 연결
-				getContentPane().add(PC, BorderLayout.CENTER);
-				revalidate();
-				repaint();
-
-				currentComponent = PC;
-
-			}
-		});
-		menuBar.add(btnPCManage);
+//		JButton btnPCManage = new JButton("PC관리");
+//		btnPCManage.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//				// 현재 판넬 제거
+//				getContentPane().remove(currentComponent);
+//				revalidate(); // 컴퍼넌트 재검토
+//				repaint(); // 컴퍼넌트 다시 그림
+//				textPaneNotice.setVisible(false);
+//				// 로그인 했을 때 보여줄 판넬 추가
+//				PCManagePanel PC = new PCManagePanel();
+//
+//				// 로그인 판넬을 프레임에 연결
+//				getContentPane().add(PC, BorderLayout.CENTER);
+//				revalidate();
+//				repaint();
+//
+//				currentComponent = PC;
+//
+//			}
+//		});
+//		menuBar.add(btnPCManage);
 
 		JButton btnSelectMember = new JButton("전체 회원 조회");
 		menuBar.add(btnSelectMember);
