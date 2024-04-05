@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import oracle.jdbc.OracleDriver;
 
 public class ManageDAOImple implements ManageDAO, OracleQuery {
